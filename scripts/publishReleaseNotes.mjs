@@ -41,8 +41,6 @@ async function main() {
     .map((token) => token.raw)
     .join('')
     .trim();
-  console.log('RAW MARKDOWN');
-  console.log(combinedMarkdown);
 
   // Collect environment metadata
   const repositoryMetadata = process.env.GITHUB_REPOSITORY.split('/');
@@ -51,11 +49,6 @@ async function main() {
   const commitHash = process.env.GITHUB_SHA;
   // const isDraft = false;
   // const isPrerelease = false;
-  console.log('GITHUB');
-  console.log(`OWNER "${repoOwner}"`);
-  console.log(`REPO "${repoName}"`);
-  console.log(`TAG "${tagName}"`);
-  console.log(`COMMIT HASH "${commitHash}"`);
 
   // Authenticate on Github, then create a release note
   if (process.env.LOCAL) {
