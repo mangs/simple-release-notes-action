@@ -19,7 +19,6 @@
     "node": ">=16.13.0"
   },
   "files": [],
-  "main": "src/publishReleaseNotes.mjs",
   "scripts": {
     "delete:node_modules": "rm -rf node_modules",
     "delete:package-lock": "rm -f package-lock.json",
@@ -30,10 +29,10 @@
     "lint:javascript": "echo Linting JavaScript... && eslint --ext cjs,js,mjs --ignore-path .gitignore --max-warnings 0 --cache --cache-location .eslintcache --cache-strategy content .",
     "list:todo-comments:ripgrep": "node_modules/@vscode/ripgrep/bin/rg --only-matching '(TODO|FIXME):[a-zA-Z0-9\\t .,;?]+'",
     "list:eslint:disable-directives": "node_modules/@vscode/ripgrep/bin/rg '/(/|\\*+)[ \\t]*eslint-disable[^*]*(\\*+/)?'",
-    "publish:release-notes": "node src/publishReleaseNotes.mjs",
+    "publish:release-notes": "./scripts/publishReleaseNotes.mjs",
     "reinstall": "npm run --silent delete:node_modules && npm run --silent delete:package-lock && npm i",
     "reinstall:use-lock-file": "npm run --silent delete:node_modules && npm ci",
-    "test": "LOCAL=y GITHUB_REPOSITORY=mangs/simple-release-notes-action node src/publishReleaseNotes.mjs",
+    "test": "LOCAL=y GITHUB_REPOSITORY=mangs/simple-release-notes-action ./scripts/publishReleaseNotes.mjs",
     "validate:formatting": "prettier --check --no-editorconfig .",
     "validate:formatting:javascript": "prettier --check --no-editorconfig \"**/*.{cjs,js,mjs}\"",
     "validate:formatting:json": "prettier --check --no-editorconfig \"**/*.json\"",
