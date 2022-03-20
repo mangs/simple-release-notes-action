@@ -24,6 +24,7 @@
     "delete:node_modules": "rm -rf node_modules",
     "delete:package-lock": "rm -f package-lock.json",
     "extract:release-notes": "node src/marked.mjs",
+    "extract:release-notes:test-local": "LOCAL=y GITHUB_REPOSITORY=mangs/simple-release-notes-action node src/marked.mjs",
     "format:code": "prettier --write --no-editorconfig .",
     "format:code:javascript": "prettier --write --no-editorconfig \"**/*.{cjs,js,mjs}\"",
     "format:code:json": "prettier --write --no-editorconfig \"**/*.json\"",
