@@ -38,9 +38,11 @@ async function main() {
   console.log(rawCombinedMarkdown);
 
   // Connect to GitHub
-  const bla = process.env.GITHUB_REPOSITORY;
+  const repositoryMetadata = process.env.GITHUB_REPOSITORY.split('/');
+  const [repoOwner, repoName] = repositoryMetadata;
   console.log('GITHUB');
-  console.log(bla);
+  console.log(`OWNER "${repoOwner}"`);
+  console.log(`REPO "${repoName}"`);
   // const octokit = new Octokit();
   // await octokit.request('POST /repos/{owner}/{repo}/releases', {
   //   owner: 'octocat',
