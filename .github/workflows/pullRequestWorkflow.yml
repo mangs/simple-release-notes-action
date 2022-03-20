@@ -25,4 +25,6 @@ jobs:
       # Task execution
       - run: npm run lint:javascript
       - run: npm run validate:formatting
-      - run: npm run extract:release-notes
+      - run: npm run publish:release-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
