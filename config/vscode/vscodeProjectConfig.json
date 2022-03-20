@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "module": "es2022",
+    "target": "ES2021"
+  },
+  "exclude": ["build", "dist", "node_modules"],
+  "typeAcquisition": {
+    "include": ["jest"]
+  }
+}
