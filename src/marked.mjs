@@ -1,6 +1,7 @@
 // External Imports
 import { marked } from 'marked';
 import { readFile } from 'node:fs/promises';
+import { Octokit } from '@octokit/action';
 
 // Local Functions
 async function main() {
@@ -35,6 +36,17 @@ async function main() {
   const rawCombinedMarkdown = tokensForOutput.map((token) => token.raw).join('');
   // console.log('NODES', tokensForOutput);
   console.log(rawCombinedMarkdown);
+
+  // Connect to GitHub
+  const bla = process.env.GITHUB_REPOSITORY;
+  console.log('GITHUB');
+  console.log(bla);
+  // const octokit = new Octokit();
+  // await octokit.request('POST /repos/{owner}/{repo}/releases', {
+  //   owner: 'octocat',
+  //   repo: 'hello-world',
+  //   tag_name: 'tag_name',
+  // });
 }
 
 // Begin Execution
