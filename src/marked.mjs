@@ -4,14 +4,20 @@ import { readFile } from 'node:fs/promises';
 
 // Local Functions
 async function main() {
-  const targetVersion = '3.1.0';
-  const fileContents = await readFile('./CHANGELOG.md', 'utf8');
+  // Figure out where the changelog file is
+  const changelogPath = './CHANGELOG.md';
+
+  // Figure out the target version
+  const targetVersion = '1.0.0';
+
+  // Get the file contents
+  const fileContents = await readFile(changelogPath, 'utf8');
   const tokens = marked.lexer(fileContents);
 
   // Store the markdown nodes between the matched, target version number heading and the following heading at the same depth
   let isCapturing = false;
   let targetNodeDepth = 0;
-  const targetNodeType = 'heading'; // TODO: make this configurable
+  const targetNodeType = 'heading';
   const tokensForOutput = [];
   for (const token of tokens) {
     if (isCapturing) {
@@ -25,10 +31,10 @@ async function main() {
     }
   }
 
-  // Compile the raw markdown output
+  // Compile the raw markdown output, then send it to GitHub
   const rawCombinedMarkdown = tokensForOutput.map((token) => token.raw).join('');
   // console.log('NODES', tokensForOutput);
-  console.log('RAW', rawCombinedMarkdown);
+  console.log(rawCombinedMarkdown);
 }
 
 // Begin Execution
