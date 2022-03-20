@@ -1,7 +1,7 @@
 // External Imports
 import { marked } from 'marked';
 import { readFile } from 'node:fs/promises';
-import { Octokit } from '@octokit/action';
+// import { Octokit } from '@octokit/action';
 
 // Local Functions
 async function main() {
