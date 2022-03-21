@@ -1,7 +1,7 @@
 {
   "name": "simple-release-notes-action",
   "version": "1.0.0",
-  "author": "Eric L. Goldstein <eric.lucien.goldstein@gmail.com>",
+  "author": "Eric L. Goldstein",
   "description": "GitHub Action that auto-publishes release notes using a very simple-to-follow set of rules",
   "keywords": [
     "github",
