@@ -1,4 +1,4 @@
-name: Simple Release Notes Action
+name: mangs/simple-release-notes-action
 author: Eric L. Goldstein
 description: GitHub Action that auto-publishes release notes using a very simple-to-follow set of rules
 inputs:
@@ -12,5 +12,8 @@ inputs:
     required: false
   tag_prefix:
     default: v
-    description: Prefix used to create the tag - the concatenation of the tag prefix and the version number from package.json, in that order
+    description: Prefix used to create the tag - the concatenation of this value and the version number from package.json, in that order
     required: false
+runs:
+  using: node16
+  main: "./scripts/publishReleaseNotes.mjs"

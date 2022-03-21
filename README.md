@@ -1,4 +1,4 @@
-# Simple Release Notes Action
+# `mangs/simple-release-notes-action`
 
 GitHub Action that auto-publishes release notes using a very simple-to-follow set of rules
 
@@ -31,8 +31,8 @@ etc...
 
 ## Action Inputs
 
-| Name               | Required | Default Value    | Descripition                                                                                                                |
-| ------------------ | -------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `changelog_path`   | N        | `./CHANGELOG.md` | Path to the target changelog file                                                                                           |
-| `packagejson_path` | N        | `./package.json` | Path to the target `package.json` file                                                                                      |
-| `tag_prefix`       | N        | `v`              | Prefix used to create the tag - the concatenation of the tag prefix and the version number from package.json, in that order |
+| Name               | Required | Default Value    | Descripition                                                                                                            |
+| ------------------ | -------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `changelog_path`   | N        | `./CHANGELOG.md` | Path to the target changelog file                                                                                       |
+| `packagejson_path` | N        | `./package.json` | Path to the target `package.json` file                                                                                  |
+| `tag_prefix`       | N        | `v`              | Prefix used to create the tag - the concatenation of this value and the version number from package.json, in that order |
