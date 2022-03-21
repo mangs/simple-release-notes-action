@@ -5,7 +5,7 @@ GitHub Action that auto-publishes release notes using a very simple-to-follow se
 ## Example Use
 
 ```yaml
-- uses: @mangs/simple-release-notes-action
+- uses: mangs/simple-release-notes-action@v1
   with:
     github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
