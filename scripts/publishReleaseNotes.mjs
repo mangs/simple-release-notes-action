@@ -2,10 +2,11 @@
 
 // External Imports
 import { readFile } from 'node:fs/promises';
+import { request } from 'node:https';
 
 // Internal Imports
 import { marked } from '../vendor/marked-4.0.12.vendor.mjs';
-import { Octokit } from '../vendor/octokit-action-3.18.0.vendor.mjs';
+// import { Octokit } from '../vendor/octokit-action-3.18.0.vendor.mjs';
 
 // Local Variables
 const changelogPath = process.env.INPUT_CHANGELOG_PATH ?? './CHANGELOG.md';
@@ -62,8 +63,19 @@ async function main() {
   if (process.env.CI !== 'true') {
     process.exit(); // Don't make any requests to GitHub when doing local testing
   }
-  const octokit = new Octokit();
-  await octokit.request(`POST /repos/${repoOwner}/${repoName}/releases`, {
+  // const octokit = new Octokit();
+  // await octokit.request(`POST /repos/${repoOwner}/${repoName}/releases`, {
+  //   body: combinedMarkdown,
+  //   // draft: isDraft,
+  //   name: targetVersion,
+  //   owner: repoOwner,
+  //   // prerelease: isPrerelease,
+  //   repo: repoName,
+  //   tag_name: tagName,
+  //   target_commitish: commitHash,
+  // });
+
+  const postData = JSON.stringify({
     body: combinedMarkdown,
     // draft: isDraft,
     name: targetVersion,
@@ -73,6 +85,18 @@ async function main() {
     tag_name: tagName,
     target_commitish: commitHash,
   });
+  const postRequest = request({
+    headers: {
+      Accept: 'application/vnd.github.v3+json',
+      'Content-Length': postData.length,
+      'Content-Type': 'application/json',
+    },
+    hostname: 'api.github.com',
+    method: 'POST',
+    path: `/repos/${repoOwner}/${repoName}/releases`,
+  });
+  postRequest.write(postData);
+  postRequest.end();
 }
 
 // Begin Execution
