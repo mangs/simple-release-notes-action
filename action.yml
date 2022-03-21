@@ -1,4 +1,4 @@
-name: mangs/simple-release-notes-action
+name: @mangs/simple-release-notes-action
 author: Eric L. Goldstein
 description: GitHub Action that auto-publishes release notes using a very simple-to-follow set of rules
 inputs:
