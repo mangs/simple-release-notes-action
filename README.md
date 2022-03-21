@@ -1,4 +1,4 @@
-# `mangs/simple-release-notes-action` a.k.a. "Simple Release Notes Action"
+# `mangs/simple-release-notes-action`
 
 GitHub Action that auto-publishes release notes using a very simple-to-follow set of rules
 
