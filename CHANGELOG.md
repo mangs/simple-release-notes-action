@@ -3,9 +3,9 @@
 ## 1.0.4
 
 - Convert `action.yml` from a composite to a JavaScript action
-- Replaced NPM dependencies needing installation with respecitive, bundled vendor files for each package in `vendor/`
+- Replaced NPM dependency `marked` with bundled version in `vendor/` to enable the switch away from a composite action and for faster action execution
+- Replaced Octokit-driven API request with Node.js-native `node:https` one
 - Added ignore config files for Prettier and ESLint
-- Replaced Octokit-driven API requests with Node.js-native `node:https` ones
 
 ## 1.0.3
 
