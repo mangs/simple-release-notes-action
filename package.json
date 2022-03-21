@@ -32,7 +32,7 @@
     "publish:release-notes": "./scripts/publishReleaseNotes.mjs",
     "reinstall": "npm run --silent delete:node_modules && npm run --silent delete:package-lock && npm i",
     "reinstall:use-lock-file": "npm run --silent delete:node_modules && npm ci",
-    "test": "LOCAL=y GITHUB_REPOSITORY=mangs/simple-release-notes-action ./scripts/publishReleaseNotes.mjs",
+    "test": "GITHUB_REPOSITORY=mangs/simple-release-notes-action ./scripts/publishReleaseNotes.mjs",
     "validate:formatting": "prettier --check --no-editorconfig .",
     "validate:formatting:javascript": "prettier --check --no-editorconfig \"**/*.{cjs,js,mjs}\"",
     "validate:formatting:json": "prettier --check --no-editorconfig \"**/*.json\"",

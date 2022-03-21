@@ -51,7 +51,7 @@ async function main() {
   // const isPrerelease = false;
 
   // Authenticate on Github, then create a release note
-  if (process.env.LOCAL) {
+  if (process.env.CI !== 'true') {
     process.exit(); // Don't make any requests to GitHub when doing local testing
   }
   const octokit = new Octokit();
