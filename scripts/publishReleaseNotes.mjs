@@ -10,6 +10,7 @@ import { marked } from '../vendor/marked-4.0.12.vendor.mjs';
 
 // Local Variables
 const changelogPath = process.env.INPUT_CHANGELOG_PATH ?? './CHANGELOG.md';
+const githubToken = process.env.INPUT_GITHUB_TOKEN;
 const packageJsonPath = process.env.INPUT_PACKAGEJSON_PATH ?? './package.json';
 const tagPrefix = process.env.INPUT_TAG_PREFIX ?? 'v';
 
@@ -121,6 +122,7 @@ async function main() {
     body: postData,
     headers: {
       Accept: 'application/vnd.github.v3+json',
+      Authorization: `Bearer ${githubToken}`,
       // 'Content-Length': postData.length,
       'Content-Type': 'application/json',
       'User-Agent': repositoryMetadata,
