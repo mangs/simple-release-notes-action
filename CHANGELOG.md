@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- Add missing `shell` reference for the `publish:release-notes` step of `action.yml`
+
 ## 1.0.2
 
 - Removed invalid reference in `action.yml`
