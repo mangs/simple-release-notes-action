@@ -1,5 +1,7 @@
-name: Pull Request Workflow
-on: pull_request
+name: Publish Workflow
+on:
+  push:
+    branches: [main]
 
 jobs:
   build:
@@ -21,5 +23,6 @@ jobs:
         run: npm ci
 
       # Task execution
-      - run: npm run lint:javascript
-      - run: npm run validate:formatting
+      - run: npm run publish:release-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
