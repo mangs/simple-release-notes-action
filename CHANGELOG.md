@@ -2,7 +2,7 @@
 
 ## 1.0.1
 
-- Updating the action name to "Simple Release Notes Action"
+- Updating the action name to `mangs/simple-release-notes-action`
 
 ## 1.0.0
 
