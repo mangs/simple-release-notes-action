@@ -26,7 +26,7 @@
     "format:code:javascript": "prettier --write --no-editorconfig \"**/*.{cjs,js,mjs}\"",
     "format:code:json": "prettier --write --no-editorconfig \"**/*.json\"",
     "format:code:markdown": "prettier --write --no-editorconfig \"**/*.md\"",
-    "lint:javascript": "echo Linting JavaScript... && eslint --ext cjs,js,mjs --ignore-path .gitignore --max-warnings 0 --cache --cache-location .eslintcache --cache-strategy content .",
+    "lint:javascript": "echo Linting JavaScript... && eslint --ext cjs,js,mjs --max-warnings 0 --cache --cache-location .eslintcache --cache-strategy content .",
     "list:todo-comments:ripgrep": "node_modules/@vscode/ripgrep/bin/rg --only-matching '(TODO|FIXME):[a-zA-Z0-9\\t .,;?]+'",
     "list:eslint:disable-directives": "node_modules/@vscode/ripgrep/bin/rg '/(/|\\*+)[ \\t]*eslint-disable[^*]*(\\*+/)?'",
     "publish:release-notes": "./scripts/publishReleaseNotes.mjs",
@@ -37,10 +37,6 @@
     "validate:formatting:javascript": "prettier --check --no-editorconfig \"**/*.{cjs,js,mjs}\"",
     "validate:formatting:json": "prettier --check --no-editorconfig \"**/*.json\"",
     "validate:formatting:markdown": "prettier --check --no-editorconfig \"**/*.md\""
-  },
-  "dependencies": {
-    "@octokit/action": "3.18.0",
-    "marked": "4.0.12"
   },
   "devDependencies": {
     "@vscode/ripgrep": "1.14.2",
