@@ -6,7 +6,6 @@ import { request } from 'node:https';
 
 // Internal Imports
 import { marked } from '../vendor/marked-4.0.12.vendor.mjs';
-// import { Octokit } from '../vendor/octokit-action-3.18.0.vendor.mjs';
 
 // Local Variables
 const changelogPath = process.env.INPUT_CHANGELOG_PATH ?? './CHANGELOG.md';
@@ -96,18 +95,6 @@ async function main() {
   if (process.env.CI !== 'true') {
     process.exit(); // Don't make any requests to GitHub when doing local testing
   }
-  // const octokit = new Octokit();
-  // await octokit.request(`POST /repos/${repoOwner}/${repoName}/releases`, {
-  //   body: combinedMarkdown,
-  //   // draft: isDraft,
-  //   name: targetVersion,
-  //   owner: repoOwner,
-  //   // prerelease: isPrerelease,
-  //   repo: repoName,
-  //   tag_name: tagName,
-  //   target_commitish: commitHash,
-  // });
-
   const postData = JSON.stringify({
     body: combinedMarkdown,
     // draft: isDraft,
@@ -123,20 +110,12 @@ async function main() {
     headers: {
       Accept: 'application/vnd.github.v3+json',
       Authorization: `Bearer ${githubToken}`,
-      // 'Content-Length': postData.length,
       'Content-Type': 'application/json',
       'User-Agent': repositoryMetadata,
     },
     hostname: 'api.github.com',
-    // method: 'POST',
     path: `/repos/${repoOwner}/${repoName}/releases`,
   };
-  // const postRequest = request(requestOptions, (response) => {
-  //   console.log(response.mess);
-  // });
-  // postRequest.write(postData);
-  // postRequest.end();
-
   const response = await httpsPost(requestOptions);
   console.log(`RESPONSE FROM GITHUB API:\n${response}`);
 }
