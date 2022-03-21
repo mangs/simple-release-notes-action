@@ -14,6 +14,38 @@ const packageJsonPath = process.env.INPUT_PACKAGEJSON_PATH ?? './package.json';
 const tagPrefix = process.env.INPUT_TAG_PREFIX ?? 'v';
 
 // Local Functions
+// Slight tweaks from this original implementation: https://stackoverflow.com/a/50891354
+function httpsPost({ body, ...options }) {
+  return new Promise((resolve, reject) => {
+    const postRequest = request(
+      {
+        method: 'POST',
+        ...options,
+      },
+      (response) => {
+        const chunks = [];
+        response.on('data', (data) => chunks.push(data));
+        response.on('end', () => {
+          let responseBody = Buffer.concat(chunks);
+          if (response.headers['content-type'] === 'application/json') {
+            responseBody = JSON.parse(responseBody);
+          }
+          if (response.statusCode > 399) {
+            const error = new RangeError(`[STATUS CODE ${response.statusCode}] ${responseBody}`);
+            reject(error);
+          }
+          resolve(responseBody);
+        });
+      },
+    );
+    postRequest.on('error', reject);
+    if (body) {
+      postRequest.write(body);
+    }
+    postRequest.end();
+  });
+}
+
 async function main() {
   // Get the target version from package.json
   const packageJsonContents = await readFile(packageJsonPath, 'utf8');
@@ -85,18 +117,25 @@ async function main() {
     tag_name: tagName,
     target_commitish: commitHash,
   });
-  const postRequest = request({
+  const requestOptions = {
+    body: postData,
     headers: {
       Accept: 'application/vnd.github.v3+json',
-      'Content-Length': postData.length,
+      // 'Content-Length': postData.length,
       'Content-Type': 'application/json',
     },
     hostname: 'api.github.com',
-    method: 'POST',
+    // method: 'POST',
     path: `/repos/${repoOwner}/${repoName}/releases`,
-  });
-  postRequest.write(postData);
-  postRequest.end();
+  };
+  // const postRequest = request(requestOptions, (response) => {
+  //   console.log(response.mess);
+  // });
+  // postRequest.write(postData);
+  // postRequest.end();
+
+  const response = await httpsPost(requestOptions);
+  console.log(`RESPONSE FROM GITHUB API:\n${response}`);
 }
 
 // Begin Execution
