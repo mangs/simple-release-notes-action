@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 // External Imports
-import { marked } from 'marked';
-import { Octokit } from '@octokit/action';
 import { readFile } from 'node:fs/promises';
+
+// Internal Imports
+import { marked } from '../vendor/marked-4.0.12.vendor.mjs';
+import { Octokit } from '../vendor/octokit-action-3.18.0.vendor.mjs';
 
 // Local Variables
 const changelogPath = process.env.INPUT_CHANGELOG_PATH ?? './CHANGELOG.md';
