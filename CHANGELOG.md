@@ -2,9 +2,12 @@
 
 ## 1.0.0
 
-- get ready
-
-## 0.9.9
-
-- some old shit
-- some get to this
+- First version of this action
+  - should work
+  - leave your feedback
+    - one
+    - two
+    - three
+  - more stuff
+- another top-level thing
+- And the last!
