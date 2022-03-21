@@ -123,6 +123,7 @@ async function main() {
       Accept: 'application/vnd.github.v3+json',
       // 'Content-Length': postData.length,
       'Content-Type': 'application/json',
+      'User-Agent': repositoryMetadata,
     },
     hostname: 'api.github.com',
     // method: 'POST',

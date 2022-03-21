@@ -18,7 +18,6 @@
   "engines": {
     "node": ">=16.13.0"
   },
-  "files": [],
   "scripts": {
     "delete:node_modules": "rm -rf node_modules",
     "delete:package-lock": "rm -f package-lock.json",
