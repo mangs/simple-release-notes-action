@@ -64,7 +64,7 @@ async function main() {
   await octokit.request(`POST /repos/${repoOwner}/${repoName}/releases`, {
     body: combinedMarkdown,
     // draft: isDraft,
-    generate_release_notes: true,
+    generate_release_notes: false,
     name: targetVersion,
     owner: repoOwner,
     // prerelease: isPrerelease,
