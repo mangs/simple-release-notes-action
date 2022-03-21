@@ -46,6 +46,11 @@ function httpsPost({ body, ...options }) {
   });
 }
 
+function prettyPrintJson(string) {
+  const prettyString = JSON.stringify(JSON.parse(string), undefined, 2);
+  console.log(prettyString);
+}
+
 async function main() {
   // Get the target version from package.json
   const packageJsonContents = await readFile(packageJsonPath, 'utf8');
@@ -116,8 +121,15 @@ async function main() {
     hostname: 'api.github.com',
     path: `/repos/${repoOwner}/${repoName}/releases`,
   };
-  const response = await httpsPost(requestOptions);
-  console.log(`RESPONSE FROM GITHUB API:\n${response}`);
+  try {
+    const response = await httpsPost(requestOptions);
+    console.log('✅ RESPONSE FROM GITHUB API:');
+    prettyPrintJson(response);
+  } catch (error) {
+    console.log('✅ ERROR FROM GITHUB API:');
+    prettyPrintJson(error);
+    process.exit(1);
+  }
 }
 
 // Begin Execution

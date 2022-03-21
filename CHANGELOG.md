@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5
+
+- Pretty-print the API responses from GitHub
+
 ## 1.0.4
 
 - Convert `action.yml` from a composite to a JavaScript action
