@@ -36,8 +36,6 @@ runs:
     - if: steps.npm-cache.outputs.cache-hit != 'true'
       run: npm ci
       shell: bash
-      env:
-        NODE_AUTH_TOKEN: ${{secrets.PACKAGES_TOKEN}}
 
     # Task execution
     - run: npm run publish:release-notes
