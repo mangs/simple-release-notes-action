@@ -19,8 +19,6 @@ jobs:
           key: ${{ runner.os }}-npm-v${{ steps.npm-capture.outputs.version-number }}-${{ hashFiles('./package-lock.json') }}
       - if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.PACKAGES_TOKEN}}
 
       # Task execution
       - run: npm run lint:javascript

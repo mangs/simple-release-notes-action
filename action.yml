@@ -6,6 +6,9 @@ inputs:
     default: "./CHANGELOG.md"
     description: Path to the target changelog file
     required: false
+  github_token:
+    description: GitHub authentication token used to authenticate on behalf of GitHub Actions
+    required: true
   packagejson_path:
     default: "./package.json"
     description: Path to the target package.json file
@@ -15,5 +18,30 @@ inputs:
     description: Prefix used to create the tag - the concatenation of this value and the version number from package.json, in that order
     required: false
 runs:
-  using: node16
-  main: "./scripts/publishReleaseNotes.mjs"
+  # using: node16
+  # main: "./scripts/publishReleaseNotes.mjs"
+  using: composite
+  steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v3
+      with:
+        node-version: "16.14.2"
+    - name: Capture NPM version number
+      id: npm-capture
+      run: echo "::set-output name=version-number::$(npm -v)"
+      shell: bash
+    - uses: actions/cache@v2
+      id: npm-cache
+      with:
+        path: "./node_modules"
+        key: ${{ runner.os }}-npm-v${{ steps.npm-capture.outputs.version-number }}-${{ hashFiles('./package-lock.json') }}
+    - if: steps.npm-cache.outputs.cache-hit != 'true'
+      run: npm ci
+      shell: bash
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.PACKAGES_TOKEN}}
+
+    # Task execution
+    - run: npm run publish:release-notes
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
