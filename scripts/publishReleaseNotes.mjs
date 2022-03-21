@@ -6,9 +6,9 @@ import { Octokit } from '@octokit/action';
 import { readFile } from 'node:fs/promises';
 
 // Local Variables
-const changelogPath = process.env.INPUT_CHANGELOG_PATH;
-const packageJsonPath = process.env.INPUT_PACKAGEJSON_PATH;
-const tagPrefix = process.env.INPUT_TAG_PREFIX;
+const changelogPath = process.env.INPUT_CHANGELOG_PATH ?? './CHANGELOG.md';
+const packageJsonPath = process.env.INPUT_PACKAGEJSON_PATH ?? './package.json';
+const tagPrefix = process.env.INPUT_TAG_PREFIX ?? 'v';
 
 // Local Functions
 async function main() {
