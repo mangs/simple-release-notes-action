@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.6
+
+- Fix parse error when error response codes are returned
+
 ## 1.0.5
 
 - Pretty-print the API responses from GitHub
