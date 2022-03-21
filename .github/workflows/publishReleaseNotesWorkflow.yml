@@ -25,4 +25,4 @@ jobs:
       # Task execution
       - run: npm run publish:release-notes
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
