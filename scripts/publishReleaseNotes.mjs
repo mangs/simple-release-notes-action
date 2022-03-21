@@ -31,8 +31,8 @@ function httpsPost({ body, ...options }) {
             responseBody = JSON.parse(responseBody);
           }
           if (response.statusCode > 399) {
-            const error = new RangeError(`[STATUS CODE ${response.statusCode}] ${responseBody}`);
-            reject(error);
+            console.error(`[STATUS CODE ${response.statusCode}]`);
+            reject(responseBody);
           }
           resolve(responseBody);
         });
@@ -126,7 +126,7 @@ async function main() {
     console.log('✅ RESPONSE FROM GITHUB API:');
     prettyPrintJson(response);
   } catch (error) {
-    console.log('✅ ERROR FROM GITHUB API:');
+    console.log('❌ ERROR FROM GITHUB API:');
     prettyPrintJson(error);
     process.exit(1);
   }
