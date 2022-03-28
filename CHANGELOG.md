@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.9
+
+- Add missing NPM scripts:
+  - `format:code:yaml`
+  - `validate:formatting:yaml`
+
 ## 1.0.8
 
 - Change `.github/CODEOWNERS` file to be a symlink to `config/github/codeOwners` as originally intended
