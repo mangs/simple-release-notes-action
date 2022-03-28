@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.7
+
+- Tweaked keyword in `package.json`
+- Updated dependencies
+
 ## 1.0.6
 
 - Fix parse error when error response codes are returned
