@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.10
+
+- Updated GitHub Action workflows
+  - `actions/cache` updated from `v2` to `v3`
+  - `actions/checkout` updated from `v2` to `v3`
+
 ## 1.0.9
 
 - Add missing NPM scripts:
