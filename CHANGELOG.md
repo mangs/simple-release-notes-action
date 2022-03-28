@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.12
+
+- Changed from `mangs/node-modules-super-cache-action` to renamed `mangs/dependency-super-cache-action` caching action
+
 ## 1.0.11
 
 - Use `mangs/node-modules-super-cache-action` to simplify workflow `node_modules` caching
