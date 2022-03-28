@@ -9,15 +9,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "16.14.2"
-      - name: Capture NPM version number
-        id: npm-capture
-        run: echo "::set-output name=version-number::$(npm -v)"
-      - uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: "./node_modules"
-          key: ${{ runner.os }}-npm-v${{ steps.npm-capture.outputs.version-number }}-${{ hashFiles('./package-lock.json') }}
-      - if: steps.npm-cache.outputs.cache-hit != 'true'
+      - id: super-cache
+        uses: mangs/node-modules-super-cache-action@v1
+      - if: steps.super-cache.outputs.cache-hit != 'true'
         run: npm ci
 
       # Task execution

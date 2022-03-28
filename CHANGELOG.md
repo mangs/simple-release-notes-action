@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.11
+
+- Use `mangs/node-modules-super-cache-action` to simplify workflow `node_modules` caching
+- Update `name` field of `.github/workflows/publishReleaseNotesWorkflow.yml` to `Publish Release Notes Workflow`
+
 ## 1.0.10
 
 - Updated GitHub Action workflows
