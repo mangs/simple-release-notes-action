@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.8
+
+- Change `.github/CODEOWNERS` file to be a symlink to `config/github/codeOwners` as originally intended
+
 ## 1.0.7
 
 - Tweaked keyword in `package.json`
