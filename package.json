@@ -1,6 +1,6 @@
 {
   "name": "simple-release-notes-action",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": "Eric L. Goldstein",
   "description": "GitHub Action that auto-publishes release notes using a very simple-to-follow set of rules",
   "keywords": [
@@ -25,6 +25,7 @@
     "format:code:javascript": "prettier --write --no-editorconfig \"**/*.{cjs,js,mjs}\"",
     "format:code:json": "prettier --write --no-editorconfig \"**/*.json\"",
     "format:code:markdown": "prettier --write --no-editorconfig \"**/*.md\"",
+    "format:code:yaml": "prettier --write --no-editorconfig \"**/*.yml\"",
     "lint:javascript": "echo Linting JavaScript... && eslint --ext cjs,js,mjs --max-warnings 0 --cache --cache-location .eslintcache --cache-strategy content .",
     "list:todo-comments:ripgrep": "node_modules/@vscode/ripgrep/bin/rg --only-matching '(TODO|FIXME):[a-zA-Z0-9\\t .,;?]+'",
     "list:eslint:disable-directives": "node_modules/@vscode/ripgrep/bin/rg '/(/|\\*+)[ \\t]*eslint-disable[^*]*(\\*+/)?'",
@@ -35,7 +36,8 @@
     "validate:formatting": "prettier --check --no-editorconfig .",
     "validate:formatting:javascript": "prettier --check --no-editorconfig \"**/*.{cjs,js,mjs}\"",
     "validate:formatting:json": "prettier --check --no-editorconfig \"**/*.json\"",
-    "validate:formatting:markdown": "prettier --check --no-editorconfig \"**/*.md\""
+    "validate:formatting:markdown": "prettier --check --no-editorconfig \"**/*.md\"",
+    "validate:formatting:yaml": "prettier --check --no-editorconfig \"**/*.yml\""
   },
   "devDependencies": {
     "@vscode/ripgrep": "1.14.2",
