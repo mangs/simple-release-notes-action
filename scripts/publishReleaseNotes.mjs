@@ -12,6 +12,8 @@ const changelogPath = process.env.INPUT_CHANGELOG_PATH ?? './CHANGELOG.md';
 const githubToken = process.env.INPUT_GITHUB_TOKEN;
 const packageJsonPath = process.env.INPUT_PACKAGEJSON_PATH ?? './package.json';
 const tagPrefix = process.env.INPUT_TAG_PREFIX ?? 'v';
+const versionMatcher = process.env.INPUT_VERSION_MATCHER ?? '^v?(?<version>\\d+\\.\\d+\\.\\d+)';
+const versionMatchRegex = new RegExp(versionMatcher);
 
 // Local Functions
 // Slight tweaks from this original implementation: https://stackoverflow.com/a/50891354
@@ -57,8 +59,8 @@ async function main() {
   const { version: targetVersion } = JSON.parse(packageJsonContents);
 
   // Read the changelog contents, then parse it into tokens
-  const fileContents = await readFile(changelogPath, 'utf8');
-  const markdownTokens = marked.lexer(fileContents);
+  const changelogContents = await readFile(changelogPath, 'utf8');
+  const markdownTokens = marked.lexer(changelogContents);
 
   // Store the markdown nodes between the matched, target version number heading and the following heading at the same depth
   let isCapturing = false;
@@ -67,10 +69,14 @@ async function main() {
   for (const token of markdownTokens) {
     if (isCapturing) {
       if (token.type === 'heading' && token.depth === targetNodeDepth) {
+        // We've reached the next version number, so we can stop collecting tokens
         break;
       }
       tokensForOutput.push(token);
-    } else if (token.type === 'heading' && token.text === targetVersion) {
+    } else if (
+      token.type === 'heading' &&
+      versionMatchRegex.exec(token.text)?.groups.version === targetVersion
+    ) {
       isCapturing = true;
       targetNodeDepth = token.depth;
     }
