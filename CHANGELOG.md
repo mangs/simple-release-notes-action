@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.13
+
+- Update dependencies
+
 ## 1.0.12
 
 - Changed from `mangs/node-modules-super-cache-action` to renamed `mangs/dependency-super-cache-action` caching action
