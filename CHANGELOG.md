@@ -1,7 +1,9 @@
 # Changelog
 
-## 1.0.13
+## 1.1.0
 
+- Updated workflow files from `mangs/dependency-super-cache-action@v2` to `mangs/super-cache-action@v3`
+- Manually updated `marked` vendor dependency from version `4.0.12` to `4.0.16`
 - Update dependencies
 
 ## 1.0.12
