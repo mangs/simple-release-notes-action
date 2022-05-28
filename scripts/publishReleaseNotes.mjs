@@ -5,7 +5,7 @@ import { readFile } from 'node:fs/promises';
 import { request } from 'node:https';
 
 // Internal Imports
-import { marked } from '../vendor/marked-4.0.12.vendor.mjs';
+import { marked } from '../vendor/marked-4.0.16.vendor.mjs';
 
 // Local Variables
 const changelogPath = process.env.INPUT_CHANGELOG_PATH ?? './CHANGELOG.md';
