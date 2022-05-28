@@ -14,17 +14,21 @@ GitHub Action that auto-publishes release notes using a very simple-to-follow se
 
 As its name implies, this action is intended to be easy to use. Here are the rules to follow for using this action:
 
-- When this action runs, it uses the `version` field in your `package.json` to find the relevant "section" in your changelog; this is the target version number
-- Your changelog file is structured into version number "sections" as follows, "section" order does not matter (use [this repository's changelog](./CHANGELOG.md) as an example):
+- When this action runs
+  - The target version number is found in the `version` field in your `package.json`
+  - The target "section" of your changelog is the one whose heading contains your target version number
+- Your changelog must be structured into version number "sections" as follows (use [this repository's changelog](./CHANGELOG.md) as an example)
+  - Heading depth doesn't matter as long as versions are always at the same depth
+  - "section" order doesn't matter
 
 ```markdown
 # <changelog title>
 
-## <version number>
+## <version number> (May 30, 2077)
 
 <any markdown can go here>
 
-## <another version number>
+## v<another version number>
 
 <any markdown can go here>
 
@@ -39,9 +43,11 @@ etc...
 
 ## Action Inputs
 
-| Name               | Required | Default Value    | Descripition                                                                                                              |
-| ------------------ | -------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `changelog_path`   | N        | `./CHANGELOG.md` | Path to the target changelog file                                                                                         |
-| `github_token`     | Y        | N/A              | GitHub authentication token used to authenticate on behalf of GitHub Actions                                              |
-| `packagejson_path` | N        | `./package.json` | Path to the target `package.json` file                                                                                    |
-| `tag_prefix`       | N        | `v`              | Prefix used to create the tag - the concatenation of this value and the version number from `package.json`, in that order |
+| Name               | Required | Default Value                         | Descripition                                                                                                  |
+| ------------------ | -------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `changelog_path`   | N        | `"./CHANGELOG.md"`                    | Path to the target changelog file                                                                             |
+| `github_token`     | Y        | N/A                                   | GitHub authentication token used to authenticate on behalf of GitHub Actions                                  |
+| `packagejson_path` | N        | `"./package.json"`                    | Path to the target `package.json` file                                                                        |
+| `tag_override`     | N        | `undefined`                           | String to enforce an exact tag version; overrides default behavior                                            |
+| `tag_prefix`       | N        | `"v"`                                 | Prefix to create a tag by combining this and the target version from `package.json`; this is default behavior |
+| `version_matcher`  | N        | `"^v?(?<version>\\d+\\.\\d+\\.\\d+)"` | String holding a regex to match the target version number                                                     |

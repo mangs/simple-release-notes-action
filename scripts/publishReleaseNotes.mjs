@@ -11,6 +11,7 @@ import { marked } from '../vendor/marked-4.0.16.vendor.mjs';
 const changelogPath = process.env.INPUT_CHANGELOG_PATH ?? './CHANGELOG.md';
 const githubToken = process.env.INPUT_GITHUB_TOKEN;
 const packageJsonPath = process.env.INPUT_PACKAGEJSON_PATH ?? './package.json';
+const tagOverride = process.env.INPUT_TAG_OVERRIDE;
 const tagPrefix = process.env.INPUT_TAG_PREFIX ?? 'v';
 const versionMatcher = process.env.INPUT_VERSION_MATCHER ?? '^v?(?<version>\\d+\\.\\d+\\.\\d+)';
 const versionMatchRegex = new RegExp(versionMatcher);
@@ -97,7 +98,7 @@ async function main() {
   // Prepare metadata
   const repositoryMetadata = process.env.GITHUB_REPOSITORY.split('/');
   const [repoOwner, repoName] = repositoryMetadata;
-  const tagName = `${tagPrefix}${targetVersion}`;
+  const tagName = tagOverride ?? `${tagPrefix}${targetVersion}`;
   const commitHash = process.env.GITHUB_SHA;
   // const isDraft = false;
   // const isPrerelease = false;
