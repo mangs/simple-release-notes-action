@@ -3,8 +3,8 @@
 ## 1.1.0
 
 - Added new action inputs
-  - Optional input `version_matcher`: a string holding a regex to match the target version number
   - Optional input `tag_override`: a string to enforce an exact tag version; overrides default behavior
+  - Optional input `version_matcher`: a string holding a regex to match the target version number
 - Updated readme with new inputs and to provide some more clarity
 - Updated workflow files
   - Replace `mangs/dependency-super-cache-action@v2` with `mangs/super-cache-action@v3`
