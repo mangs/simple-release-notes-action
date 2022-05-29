@@ -18,7 +18,7 @@ inputs:
     required: false
   tag_prefix:
     default: v
-    description: Prefix to create a tag by combining this and the target version from package.json; this is default behavior
+    description: Prefix to create a tag by combining this and the target version number; this is default behavior
     required: false
   version_matcher:
     default: ^v?(?<version>\\d+\\.\\d+\\.\\d+)
