@@ -16,10 +16,10 @@ As its name implies, this action is intended to be easy to use. Here are the rul
 
 - When this action runs
   - The target version number is found in the `version` field in your `package.json`
-  - The target "section" of your changelog is the one whose heading contains your target version number
+  - The target "section" of your changelog is the one immediately following the heading containing your target version number; this "section" contains the version's release notes
 - Your changelog must be structured into version number "sections" as follows (use [this repository's changelog](./CHANGELOG.md) as an example)
-  - Heading depth doesn't matter as long as versions are always at the same depth
-  - "section" order doesn't matter
+  - Version numbers must always be found at the same depth (e.g. always at `### <version>` or depth of 3)
+  - Version number ordering doesn't matter
 
 ```markdown
 # <changelog title>
@@ -28,7 +28,7 @@ As its name implies, this action is intended to be easy to use. Here are the rul
 
 <any markdown can go here>
 
-## v<another version number>
+## v<another version number> The Big Release
 
 <any markdown can go here>
 
