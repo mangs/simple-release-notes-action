@@ -50,4 +50,4 @@ etc...
 | `packagejson_path` | N        | `"./package.json"`                    | Path to the target `package.json` file                                                                        |
 | `tag_override`     | N        | `undefined`                           | String to enforce an exact tag version; overrides default behavior                                            |
 | `tag_prefix`       | N        | `"v"`                                 | Prefix to create a tag by combining this and the target version from `package.json`; this is default behavior |
-| `version_matcher`  | N        | `"^v?(?<version>\\d+\\.\\d+\\.\\d+)"` | String holding a regex to match the target version number                                                     |
+| `version_matcher`  | N        | `"^v?(?<version>\\d+\\.\\d+\\.\\d+)"` | String holding a regex to match the target version number; the `version` named capture group is required      |
