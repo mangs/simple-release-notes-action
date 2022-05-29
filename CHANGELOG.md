@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.3
+
+- Properly handle the default case where `tag_override` is an empty string
+
 ## 1.1.2
 
 - Correctly pass GitHub auth token to this action so it can publish

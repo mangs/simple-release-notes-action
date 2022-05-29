@@ -100,7 +100,7 @@ async function main() {
   // Prepare metadata
   const repositoryMetadata = process.env.GITHUB_REPOSITORY.split('/');
   const [repoOwner, repoName] = repositoryMetadata;
-  const tagName = tagOverride ?? `${tagPrefix}${targetVersion}`;
+  const tagName = tagOverride || `${tagPrefix}${targetVersion}`;
   const commitHash = process.env.GITHUB_SHA;
   // const isDraft = false;
   // const isPrerelease = false;
