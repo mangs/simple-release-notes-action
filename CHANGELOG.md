@@ -6,7 +6,9 @@
   - Optional input `version_matcher`: a string holding a regex to match the target version number
   - Optional input `tag_override`: a string to enforce an exact tag version; overrides default behavior
 - Updated readme with new inputs and to provide some more clarity
-- Updated workflow files from `mangs/dependency-super-cache-action@v2` to `mangs/super-cache-action@v3`
+- Updated workflow files
+  - Replace `mangs/dependency-super-cache-action@v2` with `mangs/super-cache-action@v3`
+  - Replace `npm run publish:release-notes` with `uses: ./`
 - Manually updated `marked` vendor dependency from version `4.0.12` to `4.0.16`
 - Update dependencies
 
