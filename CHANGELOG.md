@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+
+- Fix inability to match target version number
+
 ## 1.1.0
 
 - Added new action inputs
