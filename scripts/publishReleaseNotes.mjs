@@ -66,6 +66,7 @@ async function main() {
   // Store the markdown nodes between the matched, target version number heading and the following heading at the same depth
   let isCapturing = false;
   let targetNodeDepth = 0;
+  let versionMatchHeadingText = '';
   const tokensForOutput = [];
   for (const token of markdownTokens) {
     if (isCapturing) {
@@ -80,6 +81,7 @@ async function main() {
     ) {
       isCapturing = true;
       targetNodeDepth = token.depth;
+      versionMatchHeadingText = token.text.trim();
     }
   }
   if (!isCapturing) {
@@ -110,7 +112,7 @@ async function main() {
   const postData = JSON.stringify({
     body: combinedMarkdown,
     // draft: isDraft,
-    name: targetVersion,
+    name: versionMatchHeadingText,
     owner: repoOwner,
     // prerelease: isPrerelease,
     repo: repoName,

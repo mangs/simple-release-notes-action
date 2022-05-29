@@ -34,10 +34,10 @@ etc...
 ```
 
 - A new GitHub release will be created automatically as follows:
-  - Title will be the target version number (a.k.a. the `version` field in your `package.json`)
+  - Title will be the full text of the heading containing the target version number (a.k.a. the `version` field in your `package.json`)
   - Description will be the matched "section" of markdown
-  - Tag will be the concatenation of the tag prefix and the target version number, in that order
-- Use in a Linux environment; this is the default (this action was not tested with [macOS or Windows runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources), but it may function just fine)
+  - Tag will be either (1) the combination of the `tag_prefix` and target version number or (2) the `tag_override` value
+- Use with a [Linux runner](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources); this is the default (this action was not tested with macOS or Windows runners, but it may function just fine with them)
 
 ## Action Inputs
 
