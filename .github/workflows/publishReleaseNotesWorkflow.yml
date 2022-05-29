@@ -10,13 +10,10 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: "16.14.2"
-      - id: super-cache
-        uses: mangs/dependency-super-cache-action@v2
-      - if: steps.super-cache.outputs.cache-hit != 'true'
-        run: npm ci
+          node-version: "16.15.0"
 
       # Task execution
-      - run: npm run publish:release-notes
+      - name: Run mangs/simple-release-notes-action
+        uses: ./
         env:
           INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

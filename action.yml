@@ -3,20 +3,27 @@ author: Eric L. Goldstein
 description: GitHub Action that auto-publishes release notes using a very simple-to-follow set of rules
 inputs:
   changelog_path:
-    default: "./CHANGELOG.md"
+    default: ./CHANGELOG.md
     description: Path to the target changelog file
     required: false
   github_token:
     description: GitHub authentication token used to authenticate on behalf of GitHub Actions
     required: true
   packagejson_path:
-    default: "./package.json"
+    default: ./package.json
     description: Path to the target package.json file
+    required: false
+  tag_override:
+    description: String to enforce an exact tag version; overrides default behavior
     required: false
   tag_prefix:
     default: v
-    description: Prefix used to create the tag - the concatenation of this value and the version number from package.json, in that order
+    description: Prefix to create a tag by combining this and the target version number; this is default behavior
+    required: false
+  version_matcher:
+    default: ^v?(?<version>\\d+\\.\\d+\\.\\d+)
+    description: String holding a regex to match the target version number
     required: false
 runs:
   using: node16
-  main: "./scripts/publishReleaseNotes.mjs"
+  main: ./scripts/publishReleaseNotes.mjs

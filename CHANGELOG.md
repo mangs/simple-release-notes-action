@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.0
+
+- Added new action inputs
+  - Optional input `tag_override`: a string to enforce an exact tag version; overrides default behavior
+  - Optional input `version_matcher`: a string holding a regex to match the target version number
+- Updated readme with new inputs and to provide some more clarity
+- Updated workflow files
+  - Replace `mangs/dependency-super-cache-action@v2` with `mangs/super-cache-action@v3`
+  - Replace `npm run publish:release-notes` with `uses: ./`
+- Manually updated `marked` vendor dependency from version `4.0.12` to `4.0.16`
+- Update dependencies
+
 ## 1.0.12
 
 - Changed from `mangs/node-modules-super-cache-action` to renamed `mangs/dependency-super-cache-action` caching action
