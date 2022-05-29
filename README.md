@@ -14,12 +14,10 @@ GitHub Action that auto-publishes release notes using a very simple-to-follow se
 
 As its name implies, this action is intended to be easy to use. Here are the rules to follow for using this action:
 
-- When this action runs
-  - The target version number is found in the `version` field in your `package.json`
-  - The target "section" of your changelog is the one immediately following the heading containing your target version number; this "section" contains the version's release notes
+- When this action runs, the target version number is found in the `version` field in your `package.json`
 - Your changelog must be structured into version number "sections" as follows (use [this repository's changelog](./CHANGELOG.md) as an example)
   - Version numbers must always be found at the same depth (e.g. always at `### <version>` or depth of 3)
-  - Version number ordering doesn't matter
+  - Version number "section" ordering doesn't matter
 
 ```markdown
 # <changelog title>
