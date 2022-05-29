@@ -33,7 +33,7 @@ As its name implies, this action is intended to be easy to use. Here are the rul
 etc...
 ```
 
-- A new release will be created automatically as follows:
+- A new GitHub release will be created automatically as follows:
   - Title will be the target version number (a.k.a. the `version` field in your `package.json`)
   - Description will be the matched "section" of markdown
   - Tag will be the concatenation of the tag prefix and the target version number, in that order
