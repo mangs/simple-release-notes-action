@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2
+
+- Correctly pass GitHub auth token to this action so it can publish
+
 ## 1.1.1
 
 - Fix inability to match target version number
