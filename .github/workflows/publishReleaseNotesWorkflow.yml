@@ -13,6 +13,7 @@ jobs:
           node-version: "16.15.0"
 
       # Task execution
-      - run: npm run publish:release-notes
+      - name: Run mangs/simple-release-notes-action
+        uses: ./
         env:
           INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

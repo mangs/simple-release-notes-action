@@ -29,7 +29,6 @@
     "lint:javascript": "echo Linting JavaScript... && eslint --ext cjs,js,mjs --max-warnings 0 --cache --cache-location .eslintcache --cache-strategy content .",
     "list:todo-comments": "node_modules/@vscode/ripgrep/bin/rg --only-matching '(TODO|FIXME):[a-zA-Z0-9\\t .,;?]+'",
     "list:eslint:disable-directives": "node_modules/@vscode/ripgrep/bin/rg '/(/|\\*+)[ \\t]*eslint-disable[^*]*(\\*+/)?'",
-    "publish:release-notes": "./scripts/publishReleaseNotes.mjs",
     "reinstall": "npm run --silent delete:node_modules && npm run --silent delete:package-lock && npm i",
     "reinstall:use-lock-file": "npm run --silent delete:node_modules && npm ci",
     "test": "GITHUB_REPOSITORY=mangs/simple-release-notes-action ./scripts/publishReleaseNotes.mjs",
