@@ -3,7 +3,7 @@
 ## 2.0.0
 
 - Support SemVer patch version matching of non-numeric characters following [SemVer formatting rules](https://semver.org/#semantic-versioning-specification-semver) (e.g. `1.2.3-alpha.7+secret-release`)
-- Remove the `version_matcher` action input because the new, internal regex added for the above change makes it redundant
+- Remove the `version_matcher` action input because the new, internal regex added for the above change makes it redundant. Thanks to [sindresorhus/semver-regex](https://github.com/sindresorhus/semver-regex)!
 - Added the experimental `packageManager` field to `package.json` to follow the developing [Corepack](https://nodejs.org/api/corepack.html) Node.js standard for package managers
 
 ## 1.1.4
