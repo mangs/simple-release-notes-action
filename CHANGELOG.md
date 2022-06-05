@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.4
+
+- Readme clarification
+- Update dependencies
+
 ## 1.1.3
 
 - Properly handle the default case where `tag_override` is an empty string
