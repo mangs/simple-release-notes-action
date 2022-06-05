@@ -20,10 +20,6 @@ inputs:
     default: v
     description: Prefix to create a tag by combining this and the target version number; this is default behavior
     required: false
-  version_matcher:
-    default: "^v?(?<version>\\d+\\.\\d+\\.\\d+)"
-    description: String holding a regex to match the target version number in the changelog; the "version" named capture group is required
-    required: false
 runs:
   using: node16
   main: ./scripts/publishReleaseNotes.mjs

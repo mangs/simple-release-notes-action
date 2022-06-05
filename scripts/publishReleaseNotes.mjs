@@ -5,7 +5,7 @@ import { readFile } from 'node:fs/promises';
 import { request } from 'node:https';
 
 // Internal Imports
-import { marked } from '../vendor/marked-4.0.16.vendor.mjs';
+import { marked } from '../vendor/marked-v4.0.16.vendor.mjs';
 
 // Local Variables
 const changelogPath = process.env.INPUT_CHANGELOG_PATH ?? './CHANGELOG.md';
@@ -13,8 +13,9 @@ const githubToken = process.env.INPUT_GITHUB_TOKEN;
 const packageJsonPath = process.env.INPUT_PACKAGEJSON_PATH ?? './package.json';
 const tagOverride = process.env.INPUT_TAG_OVERRIDE;
 const tagPrefix = process.env.INPUT_TAG_PREFIX ?? 'v';
-const versionMatcher = process.env.INPUT_VERSION_MATCHER ?? '^v?(?<version>\\d+\\.\\d+\\.\\d+)';
-const versionMatchRegex = new RegExp(versionMatcher);
+const versionMatchRegex =
+  // eslint-disable-next-line regexp/no-unused-capturing-group -- having version number parts broken out may be useful in the future
+  /(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[A-Za-z-][\dA-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][\dA-Za-z-]*))*))?(?:\+([\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*))?/;
 
 // Local Functions
 // Slight tweaks from this original implementation: https://stackoverflow.com/a/50891354
@@ -77,7 +78,7 @@ async function main() {
       tokensForOutput.push(token);
     } else if (
       token.type === 'heading' &&
-      versionMatchRegex.exec(token.text)?.groups.version === targetVersion
+      versionMatchRegex.exec(token.text)?.[0] === targetVersion
     ) {
       isCapturing = true;
       targetNodeDepth = token.depth;
