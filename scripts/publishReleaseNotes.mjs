@@ -5,7 +5,7 @@ import { readFile } from 'node:fs/promises';
 import { request } from 'node:https';
 
 // Internal Imports
-import { marked } from '../vendor/marked-4.0.16.vendor.mjs';
+import { marked } from '../vendor/marked-v4.0.16.vendor.mjs';
 
 // Local Variables
 const changelogPath = process.env.INPUT_CHANGELOG_PATH ?? './CHANGELOG.md';
@@ -14,8 +14,8 @@ const packageJsonPath = process.env.INPUT_PACKAGEJSON_PATH ?? './package.json';
 const tagOverride = process.env.INPUT_TAG_OVERRIDE;
 const tagPrefix = process.env.INPUT_TAG_PREFIX ?? 'v';
 const versionMatchRegex =
-  // eslint-disable-next-line regexp/no-dupe-disjunctions -- based on v4.0.4 of sindresorhus/semver-regex (https://github.com/sindresorhus/semver-regex)
-  /(?<=^v?|\sv?)(?:(?:0|[1-9]\d{0,9})\.){2}(?:0|[1-9]\d{0,9})(?:-(?:--?|0|[1-9]\d*|\d*[a-z]+\d*)){0,100}(?=$|[ +.])(?:(?<=-\S+)(?:\.(?:--?|[\da-z-]*[a-z-]\d*|0|[1-9]\d*)){1,100})?(?!\.)(?:\+(?:[\da-z]\.?-?){1,100}(?!\w))?(?!\+)/i;
+  // eslint-disable-next-line regexp/no-unused-capturing-group -- having version number parts broken out may be useful in the future
+  /(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[A-Za-z-][\dA-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][\dA-Za-z-]*))*))?(?:\+([\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*))?/;
 
 // Local Functions
 // Slight tweaks from this original implementation: https://stackoverflow.com/a/50891354
