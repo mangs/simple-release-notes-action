@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0
+
+- For release note titles, replace link markup with just the link's user-visible text
+
 ## 2.0.0
 
 - Support SemVer patch version matching of non-numeric characters following [SemVer formatting rules](https://semver.org/#semantic-versioning-specification-semver) (e.g. `1.2.3-alpha.7+secret-release`)
