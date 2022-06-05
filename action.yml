@@ -22,7 +22,7 @@ inputs:
     required: false
   version_matcher:
     default: "^v?(?<version>\\d+\\.\\d+\\.\\d+)"
-    description: String holding a regex to match the target version number in the changelog; the `version` named capture group is required
+    description: String holding a regex to match the target version number in the changelog; the "version" named capture group is required
     required: false
 runs:
   using: node16
