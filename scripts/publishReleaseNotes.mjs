@@ -13,7 +13,7 @@ const githubToken = process.env.INPUT_GITHUB_TOKEN;
 const packageJsonPath = process.env.INPUT_PACKAGEJSON_PATH ?? './package.json';
 const tagOverride = process.env.INPUT_TAG_OVERRIDE;
 const tagPrefix = process.env.INPUT_TAG_PREFIX ?? 'v';
-const urlRegex = /\[(?<linkText>[^\]]*)\]\([^)]+\)/g;
+const urlRegex = /\[(?<linkText>[^\]]*)\]\([^)]+\)/g; // eslint-disable-line unicorn/better-regex -- stuck in a lint error loop, this is as good as it can get
 const versionMatchRegex =
   // eslint-disable-next-line regexp/no-unused-capturing-group -- having version number parts broken out may be useful in the future
   /(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[A-Za-z-][\dA-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][\dA-Za-z-]*))*))?(?:\+([\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*))?/;
