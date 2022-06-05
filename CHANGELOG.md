@@ -4,7 +4,7 @@
 
 - Support SemVer patch version matching of non-numeric characters following [SemVer formatting rules](https://semver.org/#semantic-versioning-specification-semver) (e.g. `1.2.3-alpha.7+secret-release`)
 - Remove the `version_matcher` action input because [the regex added for the above change](https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string) makes it redundant
-- [Added](https://github.com/mangs/simple-release-notes-action/blob/main/package.json#L21) the experimental `packageManager` field to `package.json` to follow the developing [Corepack](https://nodejs.org/api/corepack.html) Node.js standard for package managers
+- [Added](./package.json#L21) the experimental `packageManager` field to `package.json` to follow the developing [Corepack](https://nodejs.org/api/corepack.html) Node.js standard for package managers
 - `marked` vendor library version stayed the same but was updated using esm.sh version 85
 
 ## 1.1.4
