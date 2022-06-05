@@ -41,11 +41,10 @@ etc...
 
 ## Action Inputs
 
-| Name               | Required | Default Value                         | Descripition                                                                                                              |
-| ------------------ | -------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `changelog_path`   | N        | `"./CHANGELOG.md"`                    | Path to the target changelog file                                                                                         |
-| `github_token`     | Y        | N/A                                   | GitHub authentication token used to authenticate on behalf of GitHub Actions                                              |
-| `packagejson_path` | N        | `"./package.json"`                    | Path to the target `package.json` file                                                                                    |
-| `tag_override`     | N        | `undefined`                           | String to enforce an exact tag version; overrides default behavior                                                        |
-| `tag_prefix`       | N        | `"v"`                                 | Prefix to create a tag by combining this and the target version number; this is default behavior                          |
-| `version_matcher`  | N        | `"^v?(?<version>\\d+\\.\\d+\\.\\d+)"` | String holding a regex to match the target version number in the changelog; the `version` named capture group is required |
+| Name               | Required | Default Value      | Descripition                                                                                     |
+| ------------------ | -------- | ------------------ | ------------------------------------------------------------------------------------------------ |
+| `changelog_path`   | N        | `"./CHANGELOG.md"` | Path to the target changelog file                                                                |
+| `github_token`     | Y        | N/A                | GitHub authentication token used to authenticate on behalf of GitHub Actions                     |
+| `packagejson_path` | N        | `"./package.json"` | Path to the target `package.json` file                                                           |
+| `tag_override`     | N        | `undefined`        | String to enforce an exact tag version; overrides default behavior                               |
+| `tag_prefix`       | N        | `"v"`              | Prefix to create a tag by combining this and the target version number; this is default behavior |

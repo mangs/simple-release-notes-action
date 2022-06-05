@@ -13,8 +13,9 @@ const githubToken = process.env.INPUT_GITHUB_TOKEN;
 const packageJsonPath = process.env.INPUT_PACKAGEJSON_PATH ?? './package.json';
 const tagOverride = process.env.INPUT_TAG_OVERRIDE;
 const tagPrefix = process.env.INPUT_TAG_PREFIX ?? 'v';
-const versionMatcher = process.env.INPUT_VERSION_MATCHER ?? '^v?(?<version>\\d+\\.\\d+\\.\\d+)';
-const versionMatchRegex = new RegExp(versionMatcher);
+const versionMatchRegex =
+  // eslint-disable-next-line regexp/no-dupe-disjunctions -- based on v4.0.4 of sindresorhus/semver-regex (https://github.com/sindresorhus/semver-regex)
+  /(?<=^v?|\sv?)(?:(?:0|[1-9]\d{0,9})\.){2}(?:0|[1-9]\d{0,9})(?:-(?:--?|0|[1-9]\d*|\d*[a-z]+\d*)){0,100}(?=$|[ +.])(?:(?<=-\S+)(?:\.(?:--?|[\da-z-]*[a-z-]\d*|0|[1-9]\d*)){1,100})?(?!\.)(?:\+(?:[\da-z]\.?-?){1,100}(?!\w))?(?!\+)/i;
 
 // Local Functions
 // Slight tweaks from this original implementation: https://stackoverflow.com/a/50891354
@@ -77,7 +78,7 @@ async function main() {
       tokensForOutput.push(token);
     } else if (
       token.type === 'heading' &&
-      versionMatchRegex.exec(token.text)?.groups.version === targetVersion
+      versionMatchRegex.exec(token.text)?.[0] === targetVersion
     ) {
       isCapturing = true;
       targetNodeDepth = token.depth;
