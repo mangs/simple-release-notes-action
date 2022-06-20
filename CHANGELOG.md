@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.1
+
+- Update dependencies
+- Update GitHub Action workflow files to use Node.js version `16.15.1`
+
 ## 2.1.0
 
 - For release note titles, replace link markup with just the link's user-visible text
