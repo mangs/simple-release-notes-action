@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.3
+
+- Readme update wherein the example uses `v2` instead of `v1`
+
 ## 2.1.2
 
 - Updated workflows to use operating system `ubuntu-22.04` and Node.js version `16.17.0`
