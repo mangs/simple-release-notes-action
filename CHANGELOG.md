@@ -2,7 +2,7 @@
 
 ## 2.1.3
 
-- Readme update wherein the example uses `v2` instead of `v1`
+- Readme update wherein the usage example uses `v2` instead of `v1`
 
 ## 2.1.2
 
