@@ -1,8 +1,15 @@
 # Changelog
 
+## 2.1.2
+
+- Updated workflows to use operating system `ubuntu-22.04` and Node.js version `16.17.0`
+- Updated the [`packageManager` field of `package.json`](https://nodejs.org/dist/latest-v16.x/docs/api/all.html#all_packages_packagemanager) to enforce the use of NPM version `8.15.0` for environments with [Corepack](https://nodejs.org/dist/latest-v16.x/docs/api/corepack.html) enabled
+- Added `validate:linting:eslint` NPM script check to the pull request CI workflow to ensure no conflicts between ESLint and Prettier
+- Update dependencies to latest
+
 ## 2.1.1
 
-- Update dependencies
+- Update dependencies to latest
 - Update GitHub Action workflow files to use Node.js version `16.15.1`
 
 ## 2.1.0
@@ -19,7 +26,7 @@
 ## 1.1.4
 
 - Readme clarification
-- Update dependencies
+- Update dependencies to latest
 
 ## 1.1.3
 
@@ -43,7 +50,7 @@
   - Replace `mangs/dependency-super-cache-action@v2` with `mangs/super-cache-action@v3`
   - Replace `npm run publish:release-notes` with `uses: ./`
 - Manually updated `marked` vendor dependency from version `4.0.12` to `4.0.16`
-- Update dependencies
+- Update dependencies to latest
 
 ## 1.0.12
 

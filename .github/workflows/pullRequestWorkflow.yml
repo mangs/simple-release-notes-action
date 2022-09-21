@@ -3,17 +3,18 @@ on: pull_request
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: "16.15.1"
+          node-version: "16.17.0"
       - uses: mangs/super-cache-action@v3
         id: super-cache
       - if: steps.super-cache.outputs.cache-hit != 'true'
         run: npm ci
 
       # Task execution
-      - run: npm run lint:javascript
       - run: npm run validate:formatting
+      - run: npm run validate:linting:eslint
+      - run: npm run lint:javascript
