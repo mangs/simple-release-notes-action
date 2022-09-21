@@ -56,92 +56,86 @@ function prettyPrintJson(string) {
   console.log(prettyString);
 }
 
-async function main() {
-  // Get the target version from package.json
-  const packageJsonContents = await readFile(packageJsonPath, 'utf8');
-  const { version: targetVersion } = JSON.parse(packageJsonContents);
+// BEGIN EXECUTION
+// Get the target version from package.json
+const packageJsonContents = await readFile(packageJsonPath, 'utf8');
+const { version: targetVersion } = JSON.parse(packageJsonContents);
 
-  // Read the changelog contents, then parse it into tokens
-  const changelogContents = await readFile(changelogPath, 'utf8');
-  const markdownTokens = marked.lexer(changelogContents);
+// Read the changelog contents, then parse it into tokens
+const changelogContents = await readFile(changelogPath, 'utf8');
+const markdownTokens = marked.lexer(changelogContents);
 
-  // Store the markdown nodes between the matched, target version number heading and the following heading at the same depth
-  let isCapturing = false;
-  let targetNodeDepth = 0;
-  let versionMatchHeadingText = '';
-  const tokensForOutput = [];
-  for (const token of markdownTokens) {
-    if (isCapturing) {
-      if (token.type === 'heading' && token.depth === targetNodeDepth) {
-        // We've reached the next version number, so we can stop collecting tokens
-        break;
-      }
-      tokensForOutput.push(token);
-    } else if (
-      token.type === 'heading' &&
-      versionMatchRegex.exec(token.text)?.[0] === targetVersion
-    ) {
-      isCapturing = true;
-      targetNodeDepth = token.depth;
-      versionMatchHeadingText = token.text.trim().replaceAll(urlRegex, (...a) => a[4].linkText);
+// Store the markdown nodes between the matched, target version number heading and the following heading at the same depth
+let isCapturing = false;
+let targetNodeDepth = 0;
+let versionMatchHeadingText = '';
+const tokensForOutput = [];
+for (const token of markdownTokens) {
+  if (isCapturing) {
+    if (token.type === 'heading' && token.depth === targetNodeDepth) {
+      // We've reached the next version number, so we can stop collecting tokens
+      break;
     }
-  }
-  if (!isCapturing) {
-    console.log(
-      `No match for version "${targetVersion}" found in changelog file "${changelogPath}"`,
-    );
-    process.exit(1);
-  }
-
-  // Store the tokens' combined markdown
-  const combinedMarkdown = tokensForOutput
-    .map((token) => token.raw)
-    .join('')
-    .trim();
-
-  // Prepare metadata
-  const repositoryMetadata = process.env.GITHUB_REPOSITORY.split('/');
-  const [repoOwner, repoName] = repositoryMetadata;
-  const tagName = tagOverride || `${tagPrefix}${targetVersion}`;
-  const commitHash = process.env.GITHUB_SHA;
-  // const isDraft = false;
-  // const isPrerelease = false;
-
-  // Authenticate on Github, then create a release note
-  if (process.env.CI !== 'true') {
-    process.exit(); // Don't make any requests to GitHub when doing local testing
-  }
-  const postData = JSON.stringify({
-    body: combinedMarkdown,
-    // draft: isDraft,
-    name: versionMatchHeadingText,
-    owner: repoOwner,
-    // prerelease: isPrerelease,
-    repo: repoName,
-    tag_name: tagName,
-    target_commitish: commitHash,
-  });
-  const requestOptions = {
-    body: postData,
-    headers: {
-      Accept: 'application/vnd.github.v3+json',
-      Authorization: `Bearer ${githubToken}`,
-      'Content-Type': 'application/json',
-      'User-Agent': repositoryMetadata,
-    },
-    hostname: 'api.github.com',
-    path: `/repos/${repoOwner}/${repoName}/releases`,
-  };
-  try {
-    const response = await httpsPost(requestOptions);
-    console.log('✅ RESPONSE FROM GITHUB API:');
-    prettyPrintJson(response);
-  } catch (error) {
-    console.log('❌ ERROR FROM GITHUB API:');
-    prettyPrintJson(error);
-    process.exit(1);
+    tokensForOutput.push(token);
+  } else if (
+    token.type === 'heading' &&
+    versionMatchRegex.exec(token.text)?.[0] === targetVersion
+  ) {
+    isCapturing = true;
+    targetNodeDepth = token.depth;
+    versionMatchHeadingText = token.text.trim().replaceAll(urlRegex, (...a) => a[4].linkText);
   }
 }
+if (!isCapturing) {
+  console.log(`No match for version "${targetVersion}" found in changelog file "${changelogPath}"`);
+  process.exit(1);
+}
 
-// Begin Execution
-main();
+// Store the tokens' combined markdown
+const combinedMarkdown = tokensForOutput
+  .map((token) => token.raw)
+  .join('')
+  .trim();
+
+// Prepare metadata
+const repositoryMetadata = process.env.GITHUB_REPOSITORY.split('/');
+const [repoOwner, repoName] = repositoryMetadata;
+const tagName = tagOverride || `${tagPrefix}${targetVersion}`;
+const commitHash = process.env.GITHUB_SHA;
+// const isDraft = false;
+// const isPrerelease = false;
+
+// Authenticate on Github, then create a release note
+if (process.env.CI !== 'true') {
+  process.exit(); // Don't make any requests to GitHub when doing local testing
+}
+const postData = JSON.stringify({
+  body: combinedMarkdown,
+  // draft: isDraft,
+  name: versionMatchHeadingText,
+  owner: repoOwner,
+  // prerelease: isPrerelease,
+  repo: repoName,
+  tag_name: tagName,
+  target_commitish: commitHash,
+});
+const requestOptions = {
+  body: postData,
+  headers: {
+    Accept: 'application/vnd.github.v3+json',
+    Authorization: `Bearer ${githubToken}`,
+    'Content-Type': 'application/json',
+    'User-Agent': repositoryMetadata,
+  },
+  hostname: 'api.github.com',
+  path: `/repos/${repoOwner}/${repoName}/releases`,
+};
+try {
+  const response = await httpsPost(requestOptions);
+  console.log('✅ RESPONSE FROM GITHUB API:');
+  prettyPrintJson(response);
+} catch (error) {
+  console.log('❌ ERROR FROM GITHUB API:');
+  prettyPrintJson(error);
+  process.exit(1);
+}
