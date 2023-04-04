@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.4
+
+- Update dependencies to latest
+
 ## 2.1.3
 
 - Readme update wherein the usage example uses `v2` instead of `v1`
