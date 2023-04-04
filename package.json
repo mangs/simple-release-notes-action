@@ -1,6 +1,6 @@
 {
   "name": "simple-release-notes-action",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "author": "Eric L. Goldstein",
   "description": "GitHub Action that auto-publishes release notes using a very simple-to-follow set of rules",
   "keywords": [
@@ -23,10 +23,6 @@
     "delete:node_modules": "rm -rf node_modules",
     "delete:package-lock": "rm -f package-lock.json",
     "format:code": "prettier --write --no-editorconfig .",
-    "format:code:javascript": "prettier --write --no-editorconfig \"**/*.{cjs,js,mjs}\"",
-    "format:code:json": "prettier --write --no-editorconfig \"**/*.json\"",
-    "format:code:markdown": "prettier --write --no-editorconfig \"**/*.md\"",
-    "format:code:yaml": "prettier --write --no-editorconfig \"**/*.yml\"",
     "lint:javascript": "echo Linting JavaScript... && eslint --ext cjs,js,mjs --max-warnings 0 --cache --cache-location .eslintcache --cache-strategy content .",
     "list:todo-comments": "node_modules/@vscode/ripgrep/bin/rg --only-matching '(TODO|FIXME):[a-zA-Z0-9\\t .,;?]+'",
     "list:eslint:disable-directives": "node_modules/@vscode/ripgrep/bin/rg '/(/|\\*+)[ \\t]*eslint-disable[^*]*(\\*+/)?'",
@@ -34,21 +30,17 @@
     "reinstall:use-lock-file": "npm run --silent delete:node_modules && npm ci",
     "test": "GITHUB_REPOSITORY=mangs/simple-release-notes-action ./scripts/publishReleaseNotes.mjs",
     "validate:formatting": "prettier --check --no-editorconfig .",
-    "validate:formatting:javascript": "prettier --check --no-editorconfig \"**/*.{cjs,js,mjs}\"",
-    "validate:formatting:json": "prettier --check --no-editorconfig \"**/*.json\"",
-    "validate:formatting:markdown": "prettier --check --no-editorconfig \"**/*.md\"",
-    "validate:formatting:yaml": "prettier --check --no-editorconfig \"**/*.yml\"",
     "validate:linting:eslint": "eslint-config-prettier ./scripts/publishReleaseNotes.mjs"
   },
   "devDependencies": {
-    "@vscode/ripgrep": "1.14.2",
-    "eslint": "8.23.1",
+    "@vscode/ripgrep": "1.15.0",
+    "eslint": "8.37.0",
     "eslint-config-airbnb-base": "15.0.0",
-    "eslint-config-prettier": "8.5.0",
+    "eslint-config-prettier": "8.8.0",
     "eslint-plugin-eslint-comments": "3.2.0",
-    "eslint-plugin-import": "2.26.0",
-    "eslint-plugin-regexp": "1.9.0",
-    "eslint-plugin-unicorn": "43.0.2",
-    "prettier": "2.7.1"
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-regexp": "1.14.0",
+    "eslint-plugin-unicorn": "46.0.0",
+    "prettier": "2.8.7"
   }
 }
