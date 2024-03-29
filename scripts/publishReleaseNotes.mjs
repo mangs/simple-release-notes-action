@@ -136,6 +136,7 @@ try {
       method: 'PATCH',
     },
   );
+  console.log('STATUS', response.status, response.statusText);
   console.log('✅ SUCCESS UPDATING MAJOR TAG');
   prettyPrintJson(await response.json());
 } catch (error) {
