@@ -124,7 +124,7 @@ try {
     sha: githubSha,
   });
 
-  const response = await fetch(
+  const updateResponse = await fetch(
     `https://api.github.com/repos/${repoOwner}/${repoName}/git/refs/${ref}`,
     {
       body: tagData,
@@ -136,10 +136,34 @@ try {
       method: 'PATCH',
     },
   );
-  console.log('STATUS', response.status, response.statusText);
-  console.log('✅ SUCCESS UPDATING MAJOR TAG');
-  prettyPrintJson(await response.json());
+
+  console.log('STATUS', updateResponse.status, updateResponse.statusText);
+
+  if (updateResponse.ok) {
+    console.log('✅ SUCCESS UPDATING MAJOR TAG');
+    prettyPrintJson(await updateResponse.json());
+  } else {
+    console.log('🔨 CREATING NEW MAJOR TAG');
+    const createResponse = await fetch(
+      `https://api.github.com/repos/${repoOwner}/${repoName}/git/refs`,
+      {
+        body: tagData,
+        headers: {
+          Accept: 'application/vnd.github.v3+json',
+          Authorization: `Bearer ${githubToken}`,
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+      },
+    );
+    if (createResponse.ok) {
+      console.log('✅ SUCCESS CREATING MAJOR TAG');
+    } else {
+      console.error('❌ ERROR CREATING MAJOR TAG');
+    }
+    prettyPrintJson(await createResponse.json());
+  }
 } catch (error) {
-  console.error('❌ ERROR UPDATING MAJOR TAG');
+  console.error('❌❌❌ UNEXPECTED TAG ERROR');
   throw error;
 }
