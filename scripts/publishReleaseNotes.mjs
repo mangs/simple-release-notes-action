@@ -119,7 +119,7 @@ try {
 // Update the latest major tag version to the latest commit SHA
 try {
   const majorTag = tagOverride ? tagOverride.split('.')[0] : `${tagPrefix}${major(tagName)}`;
-  const ref = `tags/${majorTag}`; // eslint-disable-line unicorn/prevent-abbreviations -- required name
+  const ref = `refs/tags/${majorTag}`; // eslint-disable-line unicorn/prevent-abbreviations -- required name
 
   console.log('REF', ref);
 
@@ -131,7 +131,7 @@ try {
   };
 
   const updateResponse = await fetch(
-    `https://api.github.com/repos/${repoOwner}/${repoName}/git/refs/${ref}`,
+    `https://api.github.com/repos/${repoOwner}/${repoName}/git/${ref}`,
     {
       body: JSON.stringify({ ...tagData, force: true }),
       headers: {
