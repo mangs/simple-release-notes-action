@@ -5,9 +5,11 @@ import { readFile } from 'node:fs/promises';
 
 // Internal Imports
 import { marked } from '../vendor/marked-v12.0.1.vendor.mjs';
+import major from '../vendor/semver-v7.6.0-functions-major.vendor.mjs';
 
 // Local Variables
 const changelogPath = process.env.INPUT_CHANGELOG_PATH ?? './CHANGELOG.md';
+const githubSha = process.env.GITHUB_SHA;
 const githubToken = process.env.INPUT_GITHUB_TOKEN;
 const packageJsonPath = process.env.INPUT_PACKAGEJSON_PATH ?? './package.json';
 const tagOverride = process.env.INPUT_TAG_OVERRIDE;
@@ -17,6 +19,7 @@ const versionMatchRegex =
   // eslint-disable-next-line regexp/no-unused-capturing-group -- having version number parts broken out may be useful in the future
   /(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-z-][\da-z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-z-][\da-z-]*))*))?(?:\+([\da-z-]+(?:\.[\da-z-]+)*))?/i;
 
+// Local Functions
 function prettyPrintJson(string) {
   const prettyString = JSON.stringify(JSON.parse(string), undefined, 2);
   console.log(prettyString);
@@ -79,20 +82,22 @@ if (process.env.CI !== 'true') {
   // eslint-disable-next-line n/no-process-exit -- don't make any requests to GitHub when doing local testing
   process.exit();
 }
-const postData = JSON.stringify({
-  body: combinedMarkdown,
-  // draft: isDraft,
-  name: versionMatchHeadingText,
-  owner: repoOwner,
-  // prerelease: isPrerelease,
-  repo: repoName,
-  tag_name: tagName,
-  target_commitish: commitHash,
-});
 
+// Create a release
 try {
+  const releaseData = JSON.stringify({
+    body: combinedMarkdown,
+    // draft: isDraft,
+    name: versionMatchHeadingText,
+    owner: repoOwner,
+    // prerelease: isPrerelease,
+    repo: repoName,
+    tag_name: tagName,
+    target_commitish: commitHash,
+  });
+
   const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/releases`, {
-    body: postData,
+    body: releaseData,
     headers: {
       Accept: 'application/vnd.github.v3+json',
       Authorization: `Bearer ${githubToken}`,
@@ -100,10 +105,43 @@ try {
       // 'User-Agent': repositoryMetadata,
     },
   });
-  console.log('✅ RESPONSE FROM GITHUB API:');
+  console.log('✅ SUCCESS CREATING RELEASE');
   prettyPrintJson(response);
 } catch (error) {
-  console.error('❌ ERROR FROM GITHUB API:');
+  console.error('❌ ERROR CREATING RELEASE');
+  prettyPrintJson(error);
+  // eslint-disable-next-line n/no-process-exit -- stack trace not useful here
+  process.exit(1);
+}
+
+// Update the latest major tag version to the latest commit SHA
+try {
+  const majorTag = tagOverride ? tagOverride.split('.')[0] : `${tagPrefix}${major(tagName)}`;
+  const ref = `tags/${majorTag}`; // eslint-disable-line unicorn/prevent-abbreviations -- required name
+  const tagData = JSON.stringify({
+    force: true,
+    owner: repoOwner,
+    ref,
+    repo: repoName,
+    sha: githubSha,
+  });
+
+  const response = await fetch(
+    `https://api.github.com/repos/${repoOwner}/${repoName}/git/refs/${ref}`,
+    {
+      body: tagData,
+      headers: {
+        Accept: 'application/vnd.github.v3+json',
+        Authorization: `Bearer ${githubToken}`,
+        'Content-Type': 'application/json',
+        // 'User-Agent': repositoryMetadata,
+      },
+    },
+  );
+  console.log('✅ SUCCESS UPDATING MAJOR TAG');
+  prettyPrintJson(response);
+} catch (error) {
+  console.error('❌ ERROR UPDATING MAJOR TAG');
   prettyPrintJson(error);
   // eslint-disable-next-line n/no-process-exit -- stack trace not useful here
   process.exit(1);
