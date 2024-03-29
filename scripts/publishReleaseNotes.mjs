@@ -11,7 +11,7 @@ import major from '../vendor/semver-v7.6.0-functions-major.vendor.mjs';
 const changelogPath = process.env.INPUT_CHANGELOG_PATH ?? './CHANGELOG.md';
 const githubToken = process.env.INPUT_GITHUB_TOKEN;
 const packageJsonPath = process.env.INPUT_PACKAGEJSON_PATH ?? './package.json';
-const shouldUpdateMajorTag = process.env.INPUT_MAJOR_TAG_AUTO_UPDATE ?? true;
+const shouldUpdateMajorTag = process.env.INPUT_SHOULD_AUTO_UPDATE_MAJOR_TAG === 'true';
 const tagOverride = process.env.INPUT_TAG_OVERRIDE;
 const tagPrefix = process.env.INPUT_TAG_PREFIX ?? 'v';
 const urlRegex = /\[(?<linkText>[^\]]*)\]\([^)]+\)/g; // eslint-disable-line unicorn/better-regex -- stuck in a lint error loop, this is as good as it can get
