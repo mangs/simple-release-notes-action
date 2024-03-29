@@ -11,7 +11,7 @@ inputs:
     required: true
   major_tag_auto_update:
     default: true
-    description: Auto-update the major tag version of your repository when a new release gets published; create it if it doesn't exist. For example, when publishing version 2.3.4, major tag v2 will get updated to HEAD.
+    description: Auto-update the major tag version of your repository when a new release gets published or create it if it doesn't exist. For example, when publishing version 2.3.4, major tag v2 will get updated to HEAD.
     required: false
   packagejson_path:
     default: ./package.json
