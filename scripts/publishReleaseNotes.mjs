@@ -2,10 +2,9 @@
 
 // External Imports
 import { readFile } from 'node:fs/promises';
-import { request } from 'node:https';
 
 // Internal Imports
-import { marked } from '../vendor/marked-v4.0.16.vendor.mjs';
+import { marked } from '../vendor/marked-v12.0.1.vendor.mjs';
 
 // Local Variables
 const changelogPath = process.env.INPUT_CHANGELOG_PATH ?? './CHANGELOG.md';
@@ -16,40 +15,7 @@ const tagPrefix = process.env.INPUT_TAG_PREFIX ?? 'v';
 const urlRegex = /\[(?<linkText>[^\]]*)\]\([^)]+\)/g; // eslint-disable-line unicorn/better-regex -- stuck in a lint error loop, this is as good as it can get
 const versionMatchRegex =
   // eslint-disable-next-line regexp/no-unused-capturing-group -- having version number parts broken out may be useful in the future
-  /(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[A-Za-z-][\dA-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][\dA-Za-z-]*))*))?(?:\+([\dA-Za-z-]+(?:\.[\dA-Za-z-]+)*))?/;
-
-// Local Functions
-// Slight tweaks from this original implementation: https://stackoverflow.com/a/50891354
-function httpsPost({ body, ...options }) {
-  return new Promise((resolve, reject) => {
-    const postRequest = request(
-      {
-        method: 'POST',
-        ...options,
-      },
-      (response) => {
-        const chunks = [];
-        response.on('data', (data) => chunks.push(data));
-        response.on('end', () => {
-          let responseBody = Buffer.concat(chunks);
-          if (response.headers['content-type'] === 'application/json') {
-            responseBody = JSON.parse(responseBody);
-          }
-          if (response.statusCode > 399) {
-            console.error(`[STATUS CODE ${response.statusCode}]`);
-            reject(responseBody);
-          }
-          resolve(responseBody);
-        });
-      },
-    );
-    postRequest.on('error', reject);
-    if (body) {
-      postRequest.write(body);
-    }
-    postRequest.end();
-  });
-}
+  /(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-z-][\da-z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-z-][\da-z-]*))*))?(?:\+([\da-z-]+(?:\.[\da-z-]+)*))?/i;
 
 function prettyPrintJson(string) {
   const prettyString = JSON.stringify(JSON.parse(string), undefined, 2);
@@ -87,7 +53,10 @@ for (const token of markdownTokens) {
   }
 }
 if (!isCapturing) {
-  console.log(`No match for version "${targetVersion}" found in changelog file "${changelogPath}"`);
+  console.error(
+    `No match for version "${targetVersion}" found in changelog file "${changelogPath}"`,
+  );
+  // eslint-disable-next-line n/no-process-exit -- stack trace not useful here
   process.exit(1);
 }
 
@@ -107,7 +76,8 @@ const commitHash = process.env.GITHUB_SHA;
 
 // Authenticate on Github, then create a release note
 if (process.env.CI !== 'true') {
-  process.exit(); // Don't make any requests to GitHub when doing local testing
+  // eslint-disable-next-line n/no-process-exit -- don't make any requests to GitHub when doing local testing
+  process.exit();
 }
 const postData = JSON.stringify({
   body: combinedMarkdown,
@@ -119,23 +89,22 @@ const postData = JSON.stringify({
   tag_name: tagName,
   target_commitish: commitHash,
 });
-const requestOptions = {
-  body: postData,
-  headers: {
-    Accept: 'application/vnd.github.v3+json',
-    Authorization: `Bearer ${githubToken}`,
-    'Content-Type': 'application/json',
-    'User-Agent': repositoryMetadata,
-  },
-  hostname: 'api.github.com',
-  path: `/repos/${repoOwner}/${repoName}/releases`,
-};
+
 try {
-  const response = await httpsPost(requestOptions);
+  const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/releases`, {
+    body: postData,
+    headers: {
+      Accept: 'application/vnd.github.v3+json',
+      Authorization: `Bearer ${githubToken}`,
+      'Content-Type': 'application/json',
+      // 'User-Agent': repositoryMetadata,
+    },
+  });
   console.log('✅ RESPONSE FROM GITHUB API:');
   prettyPrintJson(response);
 } catch (error) {
-  console.log('❌ ERROR FROM GITHUB API:');
+  console.error('❌ ERROR FROM GITHUB API:');
   prettyPrintJson(error);
+  // eslint-disable-next-line n/no-process-exit -- stack trace not useful here
   process.exit(1);
 }

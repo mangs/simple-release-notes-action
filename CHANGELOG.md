@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.0
+
+- Update action to Node.js version 20
+- `POST` requests now done with `fetch()`
+
 ## 2.1.4
 
 - Update dependencies to latest
