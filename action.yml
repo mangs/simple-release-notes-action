@@ -13,6 +13,10 @@ inputs:
     default: ./package.json
     description: Path to the target package.json file
     required: false
+  should_auto_update_major_tag:
+    default: true
+    description: Auto-update the major tag version of your repository when a new release gets published or create it if it doesn't exist. For example, when publishing version 2.3.4, major tag v2 will get updated to HEAD.
+    required: false
   tag_override:
     description: String to enforce an exact tag version; overrides default behavior
     required: false

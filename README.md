@@ -41,10 +41,11 @@ etc...
 
 ## Action Inputs
 
-| Name               | Required | Default Value      | Descripition                                                                                     |
-| ------------------ | -------- | ------------------ | ------------------------------------------------------------------------------------------------ |
-| `changelog_path`   | N        | `"./CHANGELOG.md"` | Path to the target changelog file                                                                |
-| `github_token`     | Y        | N/A                | GitHub authentication token used to authenticate on behalf of GitHub Actions                     |
-| `packagejson_path` | N        | `"./package.json"` | Path to the target `package.json` file                                                           |
-| `tag_override`     | N        | `undefined`        | String to enforce an exact tag version; overrides default behavior                               |
-| `tag_prefix`       | N        | `"v"`              | Prefix to create a tag by combining this and the target version number; this is default behavior |
+| Name                           | Required | Default Value      | Descripition                                                                                                                                                                                                |
+| ------------------------------ | -------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `changelog_path`               | N        | `"./CHANGELOG.md"` | Path to the target changelog file                                                                                                                                                                           |
+| `github_token`                 | Y        | N/A                | GitHub authentication token used to authenticate on behalf of GitHub Actions                                                                                                                                |
+| `packagejson_path`             | N        | `"./package.json"` | Path to the target `package.json` file                                                                                                                                                                      |
+| `should_auto_update_major_tag` | N        | `true`             | Auto-update the major tag version of your repository when a new release gets published or create it if it doesn't exist. For example, when publishing version 2.3.4, major tag v2 will get updated to HEAD. |
+| `tag_override`                 | N        | `undefined`        | String to enforce an exact tag version; overrides default behavior                                                                                                                                          |
+| `tag_prefix`                   | N        | `"v"`              | Prefix to create a tag by combining this and the target version number; this is default behavior                                                                                                            |
