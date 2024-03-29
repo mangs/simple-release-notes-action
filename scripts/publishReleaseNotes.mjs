@@ -9,9 +9,9 @@ import major from '../vendor/semver-v7.6.0-functions-major.vendor.mjs';
 
 // Local Variables
 const changelogPath = process.env.INPUT_CHANGELOG_PATH ?? './CHANGELOG.md';
-const githubSha = process.env.GITHUB_SHA;
 const githubToken = process.env.INPUT_GITHUB_TOKEN;
 const packageJsonPath = process.env.INPUT_PACKAGEJSON_PATH ?? './package.json';
+const shouldUpdateMajorTag = process.env.INPUT_MAJOR_TAG_AUTO_UPDATE ?? true;
 const tagOverride = process.env.INPUT_TAG_OVERRIDE;
 const tagPrefix = process.env.INPUT_TAG_PREFIX ?? 'v';
 const urlRegex = /\[(?<linkText>[^\]]*)\]\([^)]+\)/g; // eslint-disable-line unicorn/better-regex -- stuck in a lint error loop, this is as good as it can get
@@ -56,11 +56,9 @@ for (const token of markdownTokens) {
   }
 }
 if (!isCapturing) {
-  console.error(
+  throw new Error(
     `No match for version "${targetVersion}" found in changelog file "${changelogPath}"`,
   );
-  // eslint-disable-next-line n/no-process-exit -- stack trace not useful here
-  process.exit(1);
 }
 
 // Store the tokens' combined markdown
@@ -77,27 +75,24 @@ const commitHash = process.env.GITHUB_SHA;
 // const isDraft = false;
 // const isPrerelease = false;
 
-// Authenticate on Github, then create a release note
 if (process.env.CI !== 'true') {
   // eslint-disable-next-line n/no-process-exit -- don't make any requests to GitHub when doing local testing
   process.exit();
 }
 
-// Create a release
+// Create a GitHub release
 try {
-  const releaseData = JSON.stringify({
-    body: combinedMarkdown,
-    // draft: isDraft,
-    name: versionMatchHeadingText,
-    owner: repoOwner,
-    // prerelease: isPrerelease,
-    repo: repoName,
-    tag_name: tagName,
-    target_commitish: commitHash,
-  });
-
   const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/releases`, {
-    body: releaseData,
+    body: JSON.stringify({
+      body: combinedMarkdown,
+      // draft: isDraft,
+      name: versionMatchHeadingText,
+      owner: repoOwner,
+      // prerelease: isPrerelease,
+      repo: repoName,
+      tag_name: tagName,
+      target_commitish: commitHash,
+    }),
     headers: {
       Accept: 'application/vnd.github.v3+json',
       Authorization: `Bearer ${githubToken}`,
@@ -117,17 +112,18 @@ try {
 }
 
 // Update the latest major tag version to the latest commit SHA
+if (!shouldUpdateMajorTag) {
+  // eslint-disable-next-line n/no-process-exit -- don't continue because remaining functionality has been disabled
+  process.exit(0);
+}
 try {
   const majorTag = tagOverride ? tagOverride.split('.')[0] : `${tagPrefix}${major(tagName)}`;
   const ref = `refs/tags/${majorTag}`; // eslint-disable-line unicorn/prevent-abbreviations -- required name
-
-  console.log('REF', ref);
-
   const tagData = {
     owner: repoOwner,
     ref,
     repo: repoName,
-    sha: githubSha,
+    sha: process.env.GITHUB_SHA,
   };
 
   const updateResponse = await fetch(
