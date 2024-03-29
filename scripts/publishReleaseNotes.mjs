@@ -106,9 +106,9 @@ try {
     method: 'POST',
   });
   if (response.ok) {
-    console.log('✅ SUCCESS CREATING RELEASE');
+    console.log(`✅ SUCCESS CREATING RELEASE: ${tagName}`);
   } else {
-    console.error('❌ ERROR CREATING RELEASE');
+    console.error(`❌ ERROR CREATING RELEASE: ${tagName}`);
   }
   prettyPrintJson(await response.json());
 } catch (error) {
@@ -120,18 +120,20 @@ try {
 try {
   const majorTag = tagOverride ? tagOverride.split('.')[0] : `${tagPrefix}${major(tagName)}`;
   const ref = `tags/${majorTag}`; // eslint-disable-line unicorn/prevent-abbreviations -- required name
-  const tagData = JSON.stringify({
-    force: true,
+
+  console.log('REF', ref);
+
+  const tagData = {
     owner: repoOwner,
     ref,
     repo: repoName,
     sha: githubSha,
-  });
+  };
 
   const updateResponse = await fetch(
     `https://api.github.com/repos/${repoOwner}/${repoName}/git/refs/${ref}`,
     {
-      body: tagData,
+      body: JSON.stringify({ ...tagData, force: true }),
       headers: {
         Accept: 'application/vnd.github.v3+json',
         Authorization: `Bearer ${githubToken}`,
@@ -141,17 +143,15 @@ try {
     },
   );
 
-  console.log('STATUS', updateResponse.status, updateResponse.statusText);
-
   if (updateResponse.ok) {
-    console.log('✅ SUCCESS UPDATING MAJOR TAG');
+    console.log(`✅ SUCCESS UPDATING MAJOR TAG: ${majorTag}`);
     prettyPrintJson(await updateResponse.json());
   } else {
-    console.log('🔨 CREATING NEW MAJOR TAG');
+    console.log(`🔨 CREATING MAJOR TAG: ${majorTag}`);
     const createResponse = await fetch(
       `https://api.github.com/repos/${repoOwner}/${repoName}/git/refs`,
       {
-        body: tagData,
+        body: JSON.stringify({ ...tagData }),
         headers: {
           Accept: 'application/vnd.github.v3+json',
           Authorization: `Bearer ${githubToken}`,
@@ -161,9 +161,9 @@ try {
       },
     );
     if (createResponse.ok) {
-      console.log('✅ SUCCESS CREATING MAJOR TAG');
+      console.log(`✅ SUCCESS CREATING MAJOR TAG: ${majorTag}`);
     } else {
-      console.error('❌ ERROR CREATING MAJOR TAG');
+      console.error(`❌ ERROR CREATING MAJOR TAG: ${majorTag}`);
     }
     prettyPrintJson(await createResponse.json());
   }
