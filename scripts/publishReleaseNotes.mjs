@@ -104,14 +104,13 @@ try {
       'Content-Type': 'application/json',
       // 'User-Agent': repositoryMetadata,
     },
+    method: 'POST',
   });
   console.log('✅ SUCCESS CREATING RELEASE');
   prettyPrintJson(response);
 } catch (error) {
   console.error('❌ ERROR CREATING RELEASE');
-  prettyPrintJson(error);
-  // eslint-disable-next-line n/no-process-exit -- stack trace not useful here
-  process.exit(1);
+  throw error;
 }
 
 // Update the latest major tag version to the latest commit SHA
@@ -136,13 +135,12 @@ try {
         'Content-Type': 'application/json',
         // 'User-Agent': repositoryMetadata,
       },
+      method: 'PATCH',
     },
   );
   console.log('✅ SUCCESS UPDATING MAJOR TAG');
   prettyPrintJson(response);
 } catch (error) {
   console.error('❌ ERROR UPDATING MAJOR TAG');
-  prettyPrintJson(error);
-  // eslint-disable-next-line n/no-process-exit -- stack trace not useful here
-  process.exit(1);
+  throw error;
 }
