@@ -1,6 +1,6 @@
 {
   "name": "simple-release-notes-action",
-  "version": "2.1.4",
+  "version": "2.2.0",
   "author": "Eric L. Goldstein",
   "description": "GitHub Action that auto-publishes release notes using a very simple-to-follow set of rules",
   "keywords": [
@@ -16,16 +16,16 @@
     "url": "git+https://github.com/mangs/simple-release-notes-action.git"
   },
   "engines": {
-    "node": ">=16.13.0"
+    "node": ">=20.9.0"
   },
-  "packageManager": "npm@8.15.0",
+  "packageManager": "npm@10.2.4",
   "scripts": {
     "delete:node_modules": "rm -rf node_modules",
     "delete:package-lock": "rm -f package-lock.json",
     "format:code": "prettier --write --no-editorconfig .",
     "lint:javascript": "echo Linting JavaScript... && eslint --ext cjs,js,mjs --max-warnings 0 --cache --cache-location .eslintcache --cache-strategy content .",
-    "list:todo-comments": "node_modules/@vscode/ripgrep/bin/rg --only-matching '(TODO|FIXME):[a-zA-Z0-9\\t .,;?]+'",
-    "list:eslint:disable-directives": "node_modules/@vscode/ripgrep/bin/rg '/(/|\\*+)[ \\t]*eslint-disable[^*]*(\\*+/)?'",
+    "list:todo-comments": "rg --only-matching '(TODO|FIXME):[a-zA-Z0-9\\t .,;?]+'",
+    "list:eslint:disable-directives": "rg '/(/|\\*+)[ \\t]*eslint-disable[^*]*(\\*+/)?'",
     "reinstall": "npm run --silent delete:node_modules && npm run --silent delete:package-lock && npm i",
     "reinstall:use-lock-file": "npm run --silent delete:node_modules && npm ci",
     "test": "GITHUB_REPOSITORY=mangs/simple-release-notes-action ./scripts/publishReleaseNotes.mjs",
@@ -33,14 +33,8 @@
     "validate:linting:eslint": "eslint-config-prettier ./scripts/publishReleaseNotes.mjs"
   },
   "devDependencies": {
-    "@vscode/ripgrep": "1.15.0",
-    "eslint": "8.37.0",
-    "eslint-config-airbnb-base": "15.0.0",
-    "eslint-config-prettier": "8.8.0",
-    "eslint-plugin-eslint-comments": "3.2.0",
-    "eslint-plugin-import": "2.27.5",
-    "eslint-plugin-regexp": "1.14.0",
-    "eslint-plugin-unicorn": "46.0.0",
-    "prettier": "2.8.7"
+    "@babbel/eslint-config": "1.2.2",
+    "eslint": "8.57.0",
+    "prettier": "3.2.5"
   }
 }

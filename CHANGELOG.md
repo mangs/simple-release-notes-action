@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.2.0
+
+- Latest major tag now automatically updated to the latest commit SHA when new release is published
+- Update action to Node.js version 20
+- `POST` requests now done with `fetch()`
+- Linting now uses `@babbel/eslint-config`
+- Due to download reliability problems, NPM scripts `list:todo-comments` and `list:eslint:disable-directives` use a local version of Ripgrep instead of one downloaded from NPM
+- Update dependencies to latest
+
 ## 2.1.4
 
 - Update dependencies to latest
