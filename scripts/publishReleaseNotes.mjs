@@ -102,13 +102,11 @@ try {
       Accept: 'application/vnd.github.v3+json',
       Authorization: `Bearer ${githubToken}`,
       'Content-Type': 'application/json',
-      // 'User-Agent': repositoryMetadata,
     },
     method: 'POST',
   });
   console.log('✅ SUCCESS CREATING RELEASE');
-  console.log(response);
-  // prettyPrintJson(response);
+  prettyPrintJson(await response.json());
 } catch (error) {
   console.error('❌ ERROR CREATING RELEASE');
   throw error;
@@ -134,13 +132,12 @@ try {
         Accept: 'application/vnd.github.v3+json',
         Authorization: `Bearer ${githubToken}`,
         'Content-Type': 'application/json',
-        // 'User-Agent': repositoryMetadata,
       },
       method: 'PATCH',
     },
   );
   console.log('✅ SUCCESS UPDATING MAJOR TAG');
-  prettyPrintJson(response);
+  prettyPrintJson(await response.json());
 } catch (error) {
   console.error('❌ ERROR UPDATING MAJOR TAG');
   throw error;
