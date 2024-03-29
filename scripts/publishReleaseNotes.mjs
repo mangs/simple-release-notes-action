@@ -105,10 +105,14 @@ try {
     },
     method: 'POST',
   });
-  console.log('✅ SUCCESS CREATING RELEASE');
+  if (response.ok) {
+    console.log('✅ SUCCESS CREATING RELEASE');
+  } else {
+    console.error('❌ ERROR CREATING RELEASE');
+  }
   prettyPrintJson(await response.json());
 } catch (error) {
-  console.error('❌ ERROR CREATING RELEASE');
+  console.error('❌❌❌ UNEXPECTED RELEASE ERROR');
   throw error;
 }
 
