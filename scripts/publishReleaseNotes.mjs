@@ -107,7 +107,8 @@ try {
     method: 'POST',
   });
   console.log('✅ SUCCESS CREATING RELEASE');
-  prettyPrintJson(response);
+  console.log(response);
+  // prettyPrintJson(response);
 } catch (error) {
   console.error('❌ ERROR CREATING RELEASE');
   throw error;
