@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.2.0
+## 3.0.0
 
 - Latest major tag now automatically updated to the latest commit SHA when new release is published
 - Update action to Node.js version 20
