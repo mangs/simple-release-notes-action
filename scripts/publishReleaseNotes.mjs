@@ -20,8 +20,8 @@ const versionMatchRegex =
   /(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-z-][\da-z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-z-][\da-z-]*))*))?(?:\+([\da-z-]+(?:\.[\da-z-]+)*))?/i;
 
 // Local Functions
-function prettyPrintJson(string) {
-  const prettyString = JSON.stringify(JSON.parse(string), undefined, 2);
+function prettyPrintJson(json) {
+  const prettyString = JSON.stringify(json, undefined, 2);
   console.log(prettyString);
 }
 
