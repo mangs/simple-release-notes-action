@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.1
+
+- Add pull request template
+
 ## 3.0.0
 
 - Latest major tag now automatically updated to the latest commit SHA when new release is published
