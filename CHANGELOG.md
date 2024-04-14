@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.2
+
+- Return non-zero response code when an error occurs so dependent workflows will correctly fail
+- Rename action source directory from `scripts/` to `src/`
+
 ## 3.0.1
 
 - Add pull request template
