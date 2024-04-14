@@ -22,7 +22,7 @@ const versionMatchRegex =
 // Local Functions
 function prettyPrintJson(json) {
   const prettyString = JSON.stringify(json, undefined, 2);
-  console.log(prettyString);
+  console.info(prettyString);
 }
 
 // BEGIN EXECUTION
@@ -101,11 +101,14 @@ try {
     method: 'POST',
   });
   if (response.ok) {
-    console.log(`✅ SUCCESS CREATING RELEASE: ${tagName}`);
+    console.info(`✅ SUCCESS CREATING RELEASE: ${tagName}`);
   } else {
     console.error(`❌ ERROR CREATING RELEASE: ${tagName}`);
   }
   prettyPrintJson(await response.json());
+  if (!response.ok) {
+    process.exit(1); // eslint-disable-line n/no-process-exit -- stack trace not useful here
+  }
 } catch (error) {
   console.error('❌❌❌ UNEXPECTED RELEASE ERROR');
   throw error;
@@ -140,10 +143,10 @@ try {
   );
 
   if (updateResponse.ok) {
-    console.log(`✅ SUCCESS UPDATING MAJOR TAG: ${majorTag}`);
+    console.info(`✅ SUCCESS UPDATING MAJOR TAG: ${majorTag}`);
     prettyPrintJson(await updateResponse.json());
   } else {
-    console.log(`🔨 CREATING MAJOR TAG: ${majorTag}`);
+    console.info(`🔨 CREATING MAJOR TAG: ${majorTag}`);
     const createResponse = await fetch(
       `https://api.github.com/repos/${repoOwner}/${repoName}/git/refs`,
       {
@@ -157,11 +160,14 @@ try {
       },
     );
     if (createResponse.ok) {
-      console.log(`✅ SUCCESS CREATING MAJOR TAG: ${majorTag}`);
+      console.info(`✅ SUCCESS CREATING MAJOR TAG: ${majorTag}`);
     } else {
       console.error(`❌ ERROR CREATING MAJOR TAG: ${majorTag}`);
     }
     prettyPrintJson(await createResponse.json());
+    if (!createResponse.ok) {
+      process.exit(1); // eslint-disable-line n/no-process-exit -- stack trace not useful here
+    }
   }
 } catch (error) {
   console.error('❌❌❌ UNEXPECTED TAG ERROR');

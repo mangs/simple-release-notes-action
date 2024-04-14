@@ -1,6 +1,6 @@
 {
   "name": "simple-release-notes-action",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "author": "Eric L. Goldstein",
   "description": "GitHub Action that auto-publishes release notes using a very simple-to-follow set of rules",
   "keywords": [
@@ -28,9 +28,9 @@
     "list:eslint:disable-directives": "rg '/(/|\\*+)[ \\t]*eslint-disable[^*]*(\\*+/)?'",
     "reinstall": "npm run --silent delete:node_modules && npm run --silent delete:package-lock && npm i",
     "reinstall:use-lock-file": "npm run --silent delete:node_modules && npm ci",
-    "test": "GITHUB_REPOSITORY=mangs/simple-release-notes-action ./scripts/publishReleaseNotes.mjs",
+    "test": "GITHUB_REPOSITORY=mangs/simple-release-notes-action ./src/publishReleaseNotes.mjs",
     "validate:formatting": "prettier --check --no-editorconfig .",
-    "validate:linting:eslint": "eslint-config-prettier ./scripts/publishReleaseNotes.mjs"
+    "validate:linting:eslint": "eslint-config-prettier ./src/publishReleaseNotes.mjs"
   },
   "devDependencies": {
     "@babbel/eslint-config": "1.2.2",
